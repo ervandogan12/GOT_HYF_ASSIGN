@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Valar Morghulis</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.cdnfonts.com/css/star-wars" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <script src="https://kit.fontawesome.com/9ef4db385e.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+  <header>
+    <div class="topnav" id="myTopnav">
+     <div id="toggle-navigation-list">
+      <a  id="people" data-key="characters">CHARACTERS</a>
+      <a  id="location" data-key="species">LOCATIONS</a>
+      <a  id="qoutes" data-key="starships">QUOTES</a>
+      <a  id="favorites" data-key="favorites">FAVORITE QUOTES</a>
+      <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+        <i class="fa fa-bars"></i>
+      </a>
+     </div>
+
+    </div>
+    <div class="wide-screen-container">
+      <img id="home-icon" class="home-icon" src="https://as2.ftcdn.net/v2/jpg/00/97/00/07/1000_F_97000769_R4zepLTgmf8G22W7G2o8JA1HeiVK2CkK.jpg" title="Home" alt="Death-Star-icon">
+      <div class="toggle-container" id="toggle-container">
+        <div class="toggle-icon" id="toggle-icon">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </div>
+      </div>
+
+  </header>
+  <main>
+    <div id="toggle-navigation" class="toggle-navigation">
+      <ul id="toggle-navigation-list">
+        <li id="nav-people" data-key="characters" class="list-item">CHARACTERS</li>
+        <li id="nav-location" data-key="locations" class="list-item">LOCATIONS</li>
+        <li id="nav-quotes" data-key="quotes" class="list-item">QUOTES</li>
+        <li id="nav-favorites" data-key="favorites" class="list-item">FAVORITE QUOTES</li>
+      </ul>
+    </div>
+
+    <section class="collage-container" id="collage-container">
+        <div class="container">
+          <div class="slider-wrapper">
+            <a id="prev-slide" class="slide-button material-symbols-rounded">
+            </a>
+            <ul class="image-list">
+              <img id='img-1' class="image-item" src="https://mrwallpaper.com/images/high/game-of-thrones-face-frames-ajhzgv5cwhx6az5e.webp" alt="img-1" />
+              <img  id='img-2' class="image-item" src="https://mrwallpaper.com/images/high/game-of-thrones-sheepshead-hills-q4vovtj58saj5jld.webp" alt="img-2" />
+              <img  id='img-3' class="image-item" src="https://mrwallpaper.com/images/high/not-today-quote-card-1dv83qwrw406la23.webp" alt="img-3" />
+              
+            </ul>
+            <button id="next-slide" class="slide-button material-symbols-rounded">
+            </button>
+          </div>
+          <div class="slider-scrollbar">
+            <div class="scrollbar-track">
+              <div class="scrollbar-thumb"></div>
+            </div>
+          </div>
+        </div>
+    
+    </section>
+
+    <section class="collection-container-hidden" id="collection-container">
+
+    </section>
+
+
+    <div class="search-container">
+      <div class="search-field">
+        <input type="text" id="search-input" class="search-input" placeholder="Search">
+        <span class="material-icons">
+          search
+        </span>
+      </div>
+    </div>
+    <br>
+
+    <button id="goToTopButton"><i class="fas fa-angle-double-up"></i></button>
+  </main>
+  <footer>
+    <p>DESIGNED AND DEVELOPED BY <span class="name">ERHAN KORAL</span> <i class="fa fa-creative-commons"></i><i
+        class='fab fa-creative-commons-by'></i><i class='fab fa-creative-commons-nc'></i> 2023</p>
+    <p>Star Wars and all associated names and/or images are copyright <span>Lucasfilm Ltd.</span> Images were collected
+      from <a href="https://www.starwars.com/databank">starwars.com</a> in terms of "Fair Use"</p>
+  </footer>
+  <script src="scripts.js"></script>
+</body>
+
+</html>
+
+<!-- <img src="https://mrwallpaper.com/images/high/not-today-quote-card-1dv83qwrw406la23.webp" alt="ekleme">
+<img src="https://mrwallpaper.com/images/high/game-of-thrones-sheepshead-hills-q4vovtj58saj5jld.webp">
+<img src="https://mrwallpaper.com/images/high/not-today-quote-card-1dv83qwrw406la23.webp" alt="ekleme"> -->
+
