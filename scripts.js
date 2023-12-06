@@ -122,11 +122,12 @@ const toggleIcon = document.querySelector("#toggle-icon");
 const homeIcon = document.querySelector("#home-icon");
 const peopleBtn = document.querySelector("#people");
 const navPeopleBtn = document.querySelector("#nav-people");
-//const locationBtn = document.querySelector("#locations");
+const locationBtn = document.querySelector("#location");
 const navlocationBtn = document.querySelector("#nav-location");
 // const starshipsBtn = document.querySelector("#starships");
 // const navStarshipsBtn = document.querySelector("#nav-starships");
 const imgBtn1 = document.querySelector("#img-1");
+const imgBtn2 = document.querySelector("#img-2");
 // const navVehiclesBtn = document.querySelector("#nav-vehicles");
 const favoritesBtn = document.querySelector("#favorites");
 const navFavoritesBtn = document.querySelector("#nav-favorites");
@@ -323,12 +324,19 @@ const collectionRender = () => {
   isToggled && toggleHandler();
 };
 
+
+
 //////////// EVENT HANDLERS /////////////////////
 const collectionRenderHandler = (e) => {
   let collection = e.target.dataset.key;
   toggleHandler();
   clearSearchInput();
   collectionRender(collection);
+};
+
+const locationHandler = (e) => {
+
+  window.open("https://quartermaester.info");
 };
 
 const searchHandler = (e) => {
@@ -364,8 +372,9 @@ window.addEventListener("scroll", showGoToTopButton);
 homeIcon.addEventListener("click", renderHomePage);
 searchInput.addEventListener("input", searchHandler);
 peopleBtn.addEventListener("click", collectionRenderHandler);
-//locationBtn.addEventListener('click',  collectionRenderHandler)
+locationBtn.addEventListener('click',  locationHandler)
 imgBtn1.addEventListener("click", collectionRenderHandler);
+imgBtn2.addEventListener("click", locationHandler);
 // speciesBtn.addEventListener("click", collectionRenderHandler);
 // starshipsBtn.addEventListener("click", collectionRenderHandler);
 //vehiclesBtn.addEventListener("click", collectionRenderHandler);
