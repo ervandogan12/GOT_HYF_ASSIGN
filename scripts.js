@@ -11,108 +11,114 @@ function myFunction() {
 
 //slider start//
 
+const mediaQuery = window.matchMedia("max-width: 768px");
 
-const mediaQuery = window.matchMedia('max-width: 768px');
-
-if(mediaQuery)
-{
-
+if (mediaQuery) {
   const initSlider = () => {
     const imageList = document.querySelector(".slider-wrapper .image-list");
-    const slideButtons = document.querySelectorAll(".slider-wrapper .slide-button");
-    const sliderScrollbar = document.querySelector(".container .slider-scrollbar");
+    const slideButtons = document.querySelectorAll(
+      ".slider-wrapper .slide-button"
+    );
+    const sliderScrollbar = document.querySelector(
+      ".container .slider-scrollbar"
+    );
     const scrollbarThumb = sliderScrollbar.querySelector(".scrollbar-thumb");
     const maxScrollLeft = imageList.scrollWidth - imageList.clientWidth;
-    
+
     // Handle scrollbar thumb drag
     scrollbarThumb.addEventListener("mousedown", (e) => {
-        const startX = e.clientX;
-        const thumbPosition = scrollbarThumb.offsetLeft;
-        const maxThumbPosition = sliderScrollbar.getBoundingClientRect().width - scrollbarThumb.offsetWidth;
-        
-        // Update thumb position on mouse move
-        const handleMouseMove = (e) => {
-            const deltaX = e.clientX - startX;
-            const newThumbPosition = thumbPosition + deltaX;
-            // Ensure the scrollbar thumb stays within bounds
-            const boundedPosition = Math.max(0, Math.min(maxThumbPosition, newThumbPosition));
-            const scrollPosition = (boundedPosition / maxThumbPosition) * maxScrollLeft;
-            
-            scrollbarThumb.style.left = `${boundedPosition}px`;
-            imageList.scrollLeft = scrollPosition;
-        }
-        // Remove event listeners on mouse up
-        const handleMouseUp = () => {
-            document.removeEventListener("mousemove", handleMouseMove);
-            document.removeEventListener("mouseup", handleMouseUp);
-        }
-        // Add event listeners for drag interaction
-        document.addEventListener("mousemove", handleMouseMove);
-        document.addEventListener("mouseup", handleMouseUp);
+      const startX = e.clientX;
+      const thumbPosition = scrollbarThumb.offsetLeft;
+      const maxThumbPosition =
+        sliderScrollbar.getBoundingClientRect().width -
+        scrollbarThumb.offsetWidth;
+
+      // Update thumb position on mouse move
+      const handleMouseMove = (e) => {
+        const deltaX = e.clientX - startX;
+        const newThumbPosition = thumbPosition + deltaX;
+        // Ensure the scrollbar thumb stays within bounds
+        const boundedPosition = Math.max(
+          0,
+          Math.min(maxThumbPosition, newThumbPosition)
+        );
+        const scrollPosition =
+          (boundedPosition / maxThumbPosition) * maxScrollLeft;
+
+        scrollbarThumb.style.left = `${boundedPosition}px`;
+        imageList.scrollLeft = scrollPosition;
+      };
+      // Remove event listeners on mouse up
+      const handleMouseUp = () => {
+        document.removeEventListener("mousemove", handleMouseMove);
+        document.removeEventListener("mouseup", handleMouseUp);
+      };
+      // Add event listeners for drag interaction
+      document.addEventListener("mousemove", handleMouseMove);
+      document.addEventListener("mouseup", handleMouseUp);
     });
     // Slide images according to the slide button clicks
-    slideButtons.forEach(button => {
-        button.addEventListener("click", () => {
-            const direction = button.id === "prev-slide" ? -1 : 1;
-            const scrollAmount = imageList.clientWidth * direction;
-            imageList.scrollBy({ left: scrollAmount, behavior: "smooth" });
-        });
+    slideButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const direction = button.id === "prev-slide" ? -1 : 1;
+        const scrollAmount = imageList.clientWidth * direction;
+        imageList.scrollBy({ left: scrollAmount, behavior: "smooth" });
+      });
     });
-     // Show or hide slide buttons based on scroll position
+    // Show or hide slide buttons based on scroll position
     const handleSlideButtons = () => {
-        slideButtons[0].style.display = imageList.scrollLeft <= 0 ? "none" : "flex";
-        slideButtons[1].style.display = imageList.scrollLeft >= maxScrollLeft ? "none" : "flex";
-    }
+      slideButtons[0].style.display =
+        imageList.scrollLeft <= 0 ? "none" : "flex";
+      slideButtons[1].style.display =
+        imageList.scrollLeft >= maxScrollLeft ? "none" : "flex";
+    };
     // Update scrollbar thumb position based on image scroll
     const updateScrollThumbPosition = () => {
-        const scrollPosition = imageList.scrollLeft;
-        const thumbPosition = (scrollPosition / maxScrollLeft) * (sliderScrollbar.clientWidth - scrollbarThumb.offsetWidth);
-        scrollbarThumb.style.left = `${thumbPosition}px`;
-    }
+      const scrollPosition = imageList.scrollLeft;
+      const thumbPosition =
+        (scrollPosition / maxScrollLeft) *
+        (sliderScrollbar.clientWidth - scrollbarThumb.offsetWidth);
+      scrollbarThumb.style.left = `${thumbPosition}px`;
+    };
     // Call these two functions when image list scrolls
     imageList.addEventListener("scroll", () => {
-        updateScrollThumbPosition();
-        handleSlideButtons();
+      updateScrollThumbPosition();
+      handleSlideButtons();
     });
-  }
-  
+  };
 
-    window.addEventListener("resize", initSlider);
-    window.addEventListener("load", initSlider);
-
+  window.addEventListener("resize", initSlider);
+  window.addEventListener("load", initSlider);
 }
-
 
 //slider finish//
 
 let data;
 
 const getData = async () => {
-
-  const url = 'https://game-of-thrones1.p.rapidapi.com/Characters';
+  const url = "https://game-of-thrones1.p.rapidapi.com/Characters";
   const options = {
-    method: 'GET',
+    method: "GET",
     headers: {
-      'X-RapidAPI-Key': 'ac7004bf47msh2f4c6c7b1900cc8p1928afjsn3080a2b617ef',
-      'X-RapidAPI-Host': 'game-of-thrones1.p.rapidapi.com'
-    }
+      "X-RapidAPI-Key": "ac7004bf47msh2f4c6c7b1900cc8p1928afjsn3080a2b617ef",
+      "X-RapidAPI-Host": "game-of-thrones1.p.rapidapi.com",
+    },
   };
 
   let response = await fetch(url, options);
   data = await response.json();
-}
+};
 getData();
-
-
 
 let quotesData;
 const getQuotesData = async () => {
-  const response = await fetch("https://ervandogan12.github.io/GotData/quotes.json");
+  const response = await fetch(
+    "https://ervandogan12.github.io/GotData/quotes.json"
+  );
   quotesData = await response.json();
   console.log(quotesData);
 };
 getQuotesData();
-
 
 let myFavorites = [];
 let foundItemsInSearch = [];
@@ -206,50 +212,54 @@ const clearSearchInput = () => {
 //Add to / Remove from Favorites
 const addToFavorites = (e) => {
   const sentence = e.target.parentElement.lastChild.textContent;
-  const collection = 'quotes';
-
+  const collection = e.target.parentElement.parentElement.dataset.key;
 
   Object.keys(quotesData).forEach((key) => {
-    quotesData['quotes'].forEach((item) => {
+    quotesData["quotes"].forEach((item) => {
       if (sentence === item.sentence) {
-        if (myFavorites['quotes']) {
-          myFavorites['quotes'].push({ character: item.character, sentence: item.sentence });
+        if (myFavorites["quotes"]) {
+          myFavorites["quotes"].push({
+            character: item.character,
+            sentence: item.sentence,
+          });
         } else {
-          myFavorites['quotes'] = [{ character: item.character, sentence: item.sentence }];
+          myFavorites["quotes"] = [
+            { character: item.character, sentence: item.sentence },
+          ];
         }
       }
     });
   });
 
-
-
   localStorage.setItem("myFavorites", JSON.stringify(myFavorites));
   collectionRender(collection);
-  };
-
+};
 
 const deleteFromFavorites = (e) => {
   const sentence = e.target.parentElement.lastChild.textContent;
+  const collection = e.target.parentElement.parentElement.dataset.key;
+  console.log(collection+"--242--");
   Object.keys(myFavorites).forEach((key) => {
-    console.log('--234--');
+    console.log("--234--");
     myFavorites[key].forEach((item) => {
-      console.log('--236--');
+      console.log("--236--");
       if (myFavorites[key] && item.sentence === sentence) {
-        console.log('--238--');
+        console.log("--238--");
         myFavorites[key] = myFavorites[key].filter(
-          (item) => item.sentence !== sentence);
+          (item) => item.sentence !== sentence
+        );
         if (myFavorites[key].length === 0) {
-          console.log('--242--');
+          console.log("--242--");
           delete myFavorites[key];
         }
       }
     });
   });
-  console.log(myFavorites)
-  console.log('--249--');
+  console.log(myFavorites);
+  console.log("--249--");
   localStorage.setItem("myFavorites", JSON.stringify(myFavorites));
-  console.log('--251--');
-  collectionRender('favorites');
+  console.log("--251--");
+  collectionRender(collection);
 };
 
 // Create QUOTE Card
@@ -293,7 +303,13 @@ const createCharCard = (arrayItem) => {
   newDiv.appendChild(newImg);
   newImg.addEventListener("click", showImgFullPage);
   const newP = document.createElement("p");
-  const newText = document.createTextNode(`${arrayItem.firstName} ${(arrayItem.lastName === 'None' || arrayItem.lastName === 'Unknown') ? '' :arrayItem.lastName}`);
+  const newText = document.createTextNode(
+    `${arrayItem.firstName} ${
+      arrayItem.lastName === "None" || arrayItem.lastName === "Unknown"
+        ? ""
+        : arrayItem.lastName
+    }`
+  );
   newP.appendChild(newText);
   newDiv.appendChild(newP);
   newDiv.setAttribute("data-id", arrayItem.id);
@@ -326,7 +342,7 @@ const createCharCard = (arrayItem) => {
 //   const newUl = document.createElement("ul");
 //  let details = Object.keys(collectionItem);
 //  details.forEach(item=>{
- 
+
 //   let newDetails = document.createElement('li');
 
 //   newDetails.textContent = collectionItem[item];
@@ -337,7 +353,6 @@ const createCharCard = (arrayItem) => {
 
 //  newDiv.appendChild(newUl);
 
- 
 // console.log('-------227-----')
 //  console.log(details);
 //  console.log('-------229-----')
@@ -348,7 +363,7 @@ const createCharCard = (arrayItem) => {
 // };
 //Render Collection Section
 const collectionRender = (collection) => {
-  console.log('--351--');
+  console.log("--351--");
   collageContainer.className = "collage-container-hidden";
   const collectionSection = document.querySelector("#collection-container");
   if (collectionSection) {
@@ -359,51 +374,63 @@ const collectionRender = (collection) => {
   newSection.className = "collection-container";
   newSection.setAttribute("data-key", collection);
   switch (collection) {
-    case 'characters':
+    case "characters":
       {
         data.forEach((item) => {
           const newDiv = createCharCard(item);
           newSection.appendChild(newDiv);
         });
       }
-      
+
       break;
 
-      case 'quotes':
-        {
-          quotesData[collection].map((item) => {
+    case "quotes":
+      {
+        quotesData[collection].map((item) => {
+          const newDiv = createQuoteCard(item);
+          newSection.appendChild(newDiv);
+        });
+      }
+
+      break;
+    case "favorites":
+      {
+        Object.keys(myFavorites).forEach((key) => {
+          myFavorites[key].forEach((item) => {
             const newDiv = createQuoteCard(item);
             newSection.appendChild(newDiv);
           });
-        }
-        
-        break;
-        case "favorites":
-          {
+        });
+      }
 
-            Object.keys(myFavorites).forEach((key) => {
-              myFavorites[key].forEach((item) => {
-                const newDiv = createQuoteCard(item);
-                newSection.appendChild(newDiv);
-              });
-            });
+      foundItemsInSearch.map((item) => {
+        const newDiv = createCard(item);
+        newSection.appendChild(newDiv);
+      });
 
-            // Object.keys(myFavorites).forEach((key) => {
- 
-            // });
-          }
-          
-          break;
-  
+    case "searchSection":
+      {
+        foundItemsInSearch.map((item) => {
+          const newDiv = createQuoteCard(item);
+          newSection.appendChild(newDiv);
+        });
+      }
+
+      break;
+
     default:
+      {
+        data.forEach((item) => {
+          const newDiv = createCharCard(item);
+          newSection.appendChild(newDiv);
+        });
+      }
       break;
   }
 
   main.appendChild(newSection);
   isToggled && toggleHandler();
 };
-
-
 
 //////////// EVENT HANDLERS /////////////////////
 const collectionRenderHandler = (e) => {
@@ -414,16 +441,15 @@ const collectionRenderHandler = (e) => {
 };
 
 const locationHandler = (e) => {
-
   window.open("https://quartermaester.info");
 };
 
 const searchHandler = (e) => {
   const searchText = e.target.value.toLowerCase();
   foundItemsInSearch = [];
-  Object.keys(data).map((key) => {
-    data[key].map((item) => {
-      if (searchText && item.name.toLowerCase().includes(searchText)) {
+  Object.keys(quotesData).map((key) => {
+    quotesData[key].map((item) => {
+      if (searchText && item.character.toLowerCase().includes(searchText)) {
         foundItemsInSearch.push(item);
       }
     });
@@ -451,11 +477,11 @@ window.addEventListener("scroll", showGoToTopButton);
 homeIcon.addEventListener("click", renderHomePage);
 searchInput.addEventListener("input", searchHandler);
 peopleBtn.addEventListener("click", collectionRenderHandler);
-locationBtn.addEventListener('click',  locationHandler)
+locationBtn.addEventListener("click", locationHandler);
 imgBtn1.addEventListener("click", collectionRenderHandler);
 imgBtn2.addEventListener("click", locationHandler);
 imgBtn3.addEventListener("click", collectionRenderHandler);
-quotesBtn.addEventListener('click',collectionRenderHandler)
+quotesBtn.addEventListener("click", collectionRenderHandler);
 // speciesBtn.addEventListener("click", collectionRenderHandler);
 // starshipsBtn.addEventListener("click", collectionRenderHandler);
 //vehiclesBtn.addEventListener("click", collectionRenderHandler);
@@ -467,4 +493,3 @@ navPeopleBtn.addEventListener("click", collectionRenderHandler);
 // navVehiclesBtn.addEventListener("click", collectionRenderHandler);
 navFavoritesBtn.addEventListener("click", collectionRenderHandler);
 goToTopButton.addEventListener("click", goToTop);
-
