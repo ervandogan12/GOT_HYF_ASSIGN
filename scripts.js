@@ -11,6 +11,7 @@ function myFunction() {
 
 //slider start//
 
+
 const mediaQuery = window.matchMedia('max-width: 768px');
 
 if(mediaQuery)
@@ -75,10 +76,9 @@ if(mediaQuery)
     });
   }
   
-  if (typeof window !== 'undefined') {
+
     window.addEventListener("resize", initSlider);
     window.addEventListener("load", initSlider);
-  }
 
 }
 
@@ -117,10 +117,10 @@ getQuotesData();
 let myFavorites = [];
 let foundItemsInSearch = [];
 
-// const favorites = localStorage.getItem("myFavorites");
-// if (favorites) {
-//   myFavorites = JSON.parse(favorites);
-// }
+const favorites = localStorage.getItem("myFavorites");
+if (favorites) {
+  myFavorites = JSON.parse(favorites);
+}
 let isToggled = false;
 
 //////////// ELEMENT SELECTORS ////////////
@@ -136,6 +136,7 @@ const quotesBtn = document.querySelector("#quotes");
 const navquotesBtn = document.querySelector("#nav-quotes");
 const imgBtn1 = document.querySelector("#img-1");
 const imgBtn2 = document.querySelector("#img-2");
+const imgBtn3 = document.querySelector("#img-3");
 // const navVehiclesBtn = document.querySelector("#nav-vehicles");
 const favoritesBtn = document.querySelector("#favorites");
 const navFavoritesBtn = document.querySelector("#nav-favorites");
@@ -204,38 +205,51 @@ const clearSearchInput = () => {
 
 //Add to / Remove from Favorites
 const addToFavorites = (e) => {
-  const id = parseInt(e.target.parentNode.dataset.id);
-  let isInFavorite = myFavorites.filter(favItem => favItem.id === id);
-  if(isInFavorite.length === 1){
-    return
-  } else {
-    data.forEach(item => {
-      if(item.id === id){
-        myFavorites.push(item);
-      }
-    })
-  }  
-  console.log(myFavorites)  
-  localStorage.setItem("myFavorites", JSON.stringify(myFavorites));
-  collectionRender();
-  }
+  const sentence = e.target.parentElement.lastChild.textContent;
+  const collection = 'quotes';
 
 
-const deleteFromFavorites = (e) => {
-  const id = parseInt(e.target.parentNode.dataset.id);
-    myFavorites.forEach((item) => {
-      if (myFavorites && item.id === id) {
-        myFavorites = myFavorites.filter(
-          (item) => item.id !== id
-        );
-        if (myFavorites.length === 0) {
-          return
+  Object.keys(quotesData).forEach((key) => {
+    quotesData['quotes'].forEach((item) => {
+      if (sentence === item.sentence) {
+        if (myFavorites['quotes']) {
+          myFavorites['quotes'].push({ character: item.character, sentence: item.sentence });
+        } else {
+          myFavorites['quotes'] = [{ character: item.character, sentence: item.sentence }];
         }
       }
     });
-  console.log(myFavorites)
+  });
+
+
+
   localStorage.setItem("myFavorites", JSON.stringify(myFavorites));
-  collectionRender();
+  collectionRender(collection);
+  };
+
+
+const deleteFromFavorites = (e) => {
+  const sentence = e.target.parentElement.lastChild.textContent;
+  Object.keys(myFavorites).forEach((key) => {
+    console.log('--234--');
+    myFavorites[key].forEach((item) => {
+      console.log('--236--');
+      if (myFavorites[key] && item.sentence === sentence) {
+        console.log('--238--');
+        myFavorites[key] = myFavorites[key].filter(
+          (item) => item.sentence !== sentence);
+        if (myFavorites[key].length === 0) {
+          console.log('--242--');
+          delete myFavorites[key];
+        }
+      }
+    });
+  });
+  console.log(myFavorites)
+  console.log('--249--');
+  localStorage.setItem("myFavorites", JSON.stringify(myFavorites));
+  console.log('--251--');
+  collectionRender('favorites');
 };
 
 // Create QUOTE Card
@@ -247,14 +261,16 @@ const createQuoteCard = (arrayItem) => {
   newIcon.className = "far fa-bookmark icon";
   newIcon.addEventListener("click", addToFavorites);
   newIcon.title = "Add to Favorites";
-  myFavorites.forEach((item) => {
-      if (item.id === arrayItem.id) {
+  Object.keys(myFavorites).forEach((key) => {
+    myFavorites[key].forEach((item) => {
+      if (item.sentence === arrayItem.sentence) {
         newIcon.className = "far fa-bookmark inFav";
         newIcon.removeEventListener("click", addToFavorites);
         newIcon.addEventListener("click", deleteFromFavorites);
         newIcon.title = "Remove";
       }
     });
+  });
   newDiv.appendChild(newIcon);
   const newQuotaTitle = document.createElement("h1");
   const newQuotaName = document.createElement("p");
@@ -267,8 +283,8 @@ const createQuoteCard = (arrayItem) => {
   newDiv.setAttribute("data-id", arrayItem.id);
   return newDiv;
 };
-// Create Card
-const createCard = (arrayItem) => {
+// Create character Card
+const createCharCard = (arrayItem) => {
   const newDiv = document.createElement("div");
   newDiv.className = "card";
   const newImg = document.createElement("img");
@@ -284,54 +300,55 @@ const createCard = (arrayItem) => {
   return newDiv;
 };
 
-const createCardDetails = (collectionItem) => {
-  const newDiv = document.createElement("div");
-  newDiv.className = "card-details";
-  const newImg = document.createElement("img");
-  newImg.src = collectionItem.imageUrl;
-  newImg.alt = `${collectionItem.firstName} photo`;
-  newDiv.appendChild(newImg);
-  newImg.addEventListener("click", showImgFullPage);
-  const newIcon = document.createElement("i");
-  newIcon.className = "fa fa-heart-o icon";
-  newIcon.addEventListener("click", addToFavorites);
-  newIcon.title = "Add to Favorites";
-  Object.keys(myFavorites).forEach((key) => {
-    myFavorites[key].forEach((item) => {
-      if (item.name === collectionItem.firstName) {
-        newIcon.className = "fa fa-heart inFav";
-        newIcon.removeEventListener("click", addToFavorites);
-        newIcon.addEventListener("click", deleteFromFavorites);
-        newIcon.title = "Remove";
-      }
-    });
-  });
-  newDiv.appendChild(newIcon);
-  const newUl = document.createElement("ul");
- let details = Object.keys(collectionItem);
- details.forEach(item=>{
+// const createCardDetails = (collectionItem) => {
+//   const newDiv = document.createElement("div");
+//   newDiv.className = "card-details";
+//   const newImg = document.createElement("img");
+//   newImg.src = collectionItem.imageUrl;
+//   newImg.alt = `${collectionItem.firstName} photo`;
+//   newDiv.appendChild(newImg);
+//   newImg.addEventListener("click", showImgFullPage);
+//   const newIcon = document.createElement("i");
+//   newIcon.className = "fa fa-heart-o icon";
+//   newIcon.addEventListener("click", addToFavorites);
+//   newIcon.title = "Add to Favorites";
+//   Object.keys(myFavorites).forEach((key) => {
+//     myFavorites[key].forEach((item) => {
+//       if (item.name === collectionItem.firstName) {
+//         newIcon.className = "fa fa-heart inFav";
+//         newIcon.removeEventListener("click", addToFavorites);
+//         newIcon.addEventListener("click", deleteFromFavorites);
+//         newIcon.title = "Remove";
+//       }
+//     });
+//   });
+//   newDiv.appendChild(newIcon);
+//   const newUl = document.createElement("ul");
+//  let details = Object.keys(collectionItem);
+//  details.forEach(item=>{
  
-  let newDetails = document.createElement('li');
+//   let newDetails = document.createElement('li');
 
-  newDetails.textContent = collectionItem[item];
+//   newDetails.textContent = collectionItem[item];
 
-  newUl.appendChild(newDetails);
+//   newUl.appendChild(newDetails);
 
- });
+//  });
 
- newDiv.appendChild(newUl);
+//  newDiv.appendChild(newUl);
 
  
-console.log('-------227-----')
- console.log(details);
- console.log('-------229-----')
-  // const newText = document.createTextNode(collectionItem.firstName);
-  // newP.appendChild(newText);
-  // newDiv.appendChild(newUl);
-  return newDiv;
-};
+// console.log('-------227-----')
+//  console.log(details);
+//  console.log('-------229-----')
+//   // const newText = document.createTextNode(collectionItem.firstName);
+//   // newP.appendChild(newText);
+//   // newDiv.appendChild(newUl);
+//   return newDiv;
+// };
 //Render Collection Section
 const collectionRender = (collection) => {
+  console.log('--351--');
   collageContainer.className = "collage-container-hidden";
   const collectionSection = document.querySelector("#collection-container");
   if (collectionSection) {
@@ -345,7 +362,7 @@ const collectionRender = (collection) => {
     case 'characters':
       {
         data.forEach((item) => {
-          const newDiv = createCard(item);
+          const newDiv = createCharCard(item);
           newSection.appendChild(newDiv);
         });
       }
@@ -363,12 +380,17 @@ const collectionRender = (collection) => {
         break;
         case "favorites":
           {
+
             Object.keys(myFavorites).forEach((key) => {
               myFavorites[key].forEach((item) => {
-                const newDiv = createCard(item);
+                const newDiv = createQuoteCard(item);
                 newSection.appendChild(newDiv);
               });
             });
+
+            // Object.keys(myFavorites).forEach((key) => {
+ 
+            // });
           }
           
           break;
@@ -432,6 +454,7 @@ peopleBtn.addEventListener("click", collectionRenderHandler);
 locationBtn.addEventListener('click',  locationHandler)
 imgBtn1.addEventListener("click", collectionRenderHandler);
 imgBtn2.addEventListener("click", locationHandler);
+imgBtn3.addEventListener("click", collectionRenderHandler);
 quotesBtn.addEventListener('click',collectionRenderHandler)
 // speciesBtn.addEventListener("click", collectionRenderHandler);
 // starshipsBtn.addEventListener("click", collectionRenderHandler);
