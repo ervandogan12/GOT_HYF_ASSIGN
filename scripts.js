@@ -11,69 +11,77 @@ function myFunction() {
 
 //slider start//
 
-const initSlider = () => {
-  const imageList = document.querySelector(".slider-wrapper .image-list");
-  const slideButtons = document.querySelectorAll(".slider-wrapper .slide-button");
-  const sliderScrollbar = document.querySelector(".container .slider-scrollbar");
-  const scrollbarThumb = sliderScrollbar.querySelector(".scrollbar-thumb");
-  const maxScrollLeft = imageList.scrollWidth - imageList.clientWidth;
+const mediaQuery = window.matchMedia('max-width: 768px');
+
+if(mediaQuery)
+{
+
+  const initSlider = () => {
+    const imageList = document.querySelector(".slider-wrapper .image-list");
+    const slideButtons = document.querySelectorAll(".slider-wrapper .slide-button");
+    const sliderScrollbar = document.querySelector(".container .slider-scrollbar");
+    const scrollbarThumb = sliderScrollbar.querySelector(".scrollbar-thumb");
+    const maxScrollLeft = imageList.scrollWidth - imageList.clientWidth;
+    
+    // Handle scrollbar thumb drag
+    scrollbarThumb.addEventListener("mousedown", (e) => {
+        const startX = e.clientX;
+        const thumbPosition = scrollbarThumb.offsetLeft;
+        const maxThumbPosition = sliderScrollbar.getBoundingClientRect().width - scrollbarThumb.offsetWidth;
+        
+        // Update thumb position on mouse move
+        const handleMouseMove = (e) => {
+            const deltaX = e.clientX - startX;
+            const newThumbPosition = thumbPosition + deltaX;
+            // Ensure the scrollbar thumb stays within bounds
+            const boundedPosition = Math.max(0, Math.min(maxThumbPosition, newThumbPosition));
+            const scrollPosition = (boundedPosition / maxThumbPosition) * maxScrollLeft;
+            
+            scrollbarThumb.style.left = `${boundedPosition}px`;
+            imageList.scrollLeft = scrollPosition;
+        }
+        // Remove event listeners on mouse up
+        const handleMouseUp = () => {
+            document.removeEventListener("mousemove", handleMouseMove);
+            document.removeEventListener("mouseup", handleMouseUp);
+        }
+        // Add event listeners for drag interaction
+        document.addEventListener("mousemove", handleMouseMove);
+        document.addEventListener("mouseup", handleMouseUp);
+    });
+    // Slide images according to the slide button clicks
+    slideButtons.forEach(button => {
+        button.addEventListener("click", () => {
+            const direction = button.id === "prev-slide" ? -1 : 1;
+            const scrollAmount = imageList.clientWidth * direction;
+            imageList.scrollBy({ left: scrollAmount, behavior: "smooth" });
+        });
+    });
+     // Show or hide slide buttons based on scroll position
+    const handleSlideButtons = () => {
+        slideButtons[0].style.display = imageList.scrollLeft <= 0 ? "none" : "flex";
+        slideButtons[1].style.display = imageList.scrollLeft >= maxScrollLeft ? "none" : "flex";
+    }
+    // Update scrollbar thumb position based on image scroll
+    const updateScrollThumbPosition = () => {
+        const scrollPosition = imageList.scrollLeft;
+        const thumbPosition = (scrollPosition / maxScrollLeft) * (sliderScrollbar.clientWidth - scrollbarThumb.offsetWidth);
+        scrollbarThumb.style.left = `${thumbPosition}px`;
+    }
+    // Call these two functions when image list scrolls
+    imageList.addEventListener("scroll", () => {
+        updateScrollThumbPosition();
+        handleSlideButtons();
+    });
+  }
   
-  // Handle scrollbar thumb drag
-  scrollbarThumb.addEventListener("mousedown", (e) => {
-      const startX = e.clientX;
-      const thumbPosition = scrollbarThumb.offsetLeft;
-      const maxThumbPosition = sliderScrollbar.getBoundingClientRect().width - scrollbarThumb.offsetWidth;
-      
-      // Update thumb position on mouse move
-      const handleMouseMove = (e) => {
-          const deltaX = e.clientX - startX;
-          const newThumbPosition = thumbPosition + deltaX;
-          // Ensure the scrollbar thumb stays within bounds
-          const boundedPosition = Math.max(0, Math.min(maxThumbPosition, newThumbPosition));
-          const scrollPosition = (boundedPosition / maxThumbPosition) * maxScrollLeft;
-          
-          scrollbarThumb.style.left = `${boundedPosition}px`;
-          imageList.scrollLeft = scrollPosition;
-      }
-      // Remove event listeners on mouse up
-      const handleMouseUp = () => {
-          document.removeEventListener("mousemove", handleMouseMove);
-          document.removeEventListener("mouseup", handleMouseUp);
-      }
-      // Add event listeners for drag interaction
-      document.addEventListener("mousemove", handleMouseMove);
-      document.addEventListener("mouseup", handleMouseUp);
-  });
-  // Slide images according to the slide button clicks
-  slideButtons.forEach(button => {
-      button.addEventListener("click", () => {
-          const direction = button.id === "prev-slide" ? -1 : 1;
-          const scrollAmount = imageList.clientWidth * direction;
-          imageList.scrollBy({ left: scrollAmount, behavior: "smooth" });
-      });
-  });
-   // Show or hide slide buttons based on scroll position
-  const handleSlideButtons = () => {
-      slideButtons[0].style.display = imageList.scrollLeft <= 0 ? "none" : "flex";
-      slideButtons[1].style.display = imageList.scrollLeft >= maxScrollLeft ? "none" : "flex";
+  if (typeof window !== 'undefined') {
+    window.addEventListener("resize", initSlider);
+    window.addEventListener("load", initSlider);
   }
-  // Update scrollbar thumb position based on image scroll
-  const updateScrollThumbPosition = () => {
-      const scrollPosition = imageList.scrollLeft;
-      const thumbPosition = (scrollPosition / maxScrollLeft) * (sliderScrollbar.clientWidth - scrollbarThumb.offsetWidth);
-      scrollbarThumb.style.left = `${thumbPosition}px`;
-  }
-  // Call these two functions when image list scrolls
-  imageList.addEventListener("scroll", () => {
-      updateScrollThumbPosition();
-      handleSlideButtons();
-  });
+
 }
 
-if (typeof window !== 'undefined') {
-  window.addEventListener("resize", initSlider);
-  window.addEventListener("load", initSlider);
-}
 
 //slider finish//
 
@@ -97,13 +105,13 @@ getData();
 
 
 
-// let data;
-// const getData = async () => {
-//   const response = await fetch("https://ervandogan12.github.io/GotData/characters.json");
-//   data = await response.json();
-//   console.log(data);
-// };
-// getData();
+let quotesData;
+const getQuotesData = async () => {
+  const response = await fetch("https://ervandogan12.github.io/GotData/quotes.json");
+  quotesData = await response.json();
+  console.log(quotesData);
+};
+getQuotesData();
 
 
 let myFavorites = [];
@@ -124,8 +132,8 @@ const peopleBtn = document.querySelector("#people");
 const navPeopleBtn = document.querySelector("#nav-people");
 const locationBtn = document.querySelector("#location");
 const navlocationBtn = document.querySelector("#nav-location");
-// const starshipsBtn = document.querySelector("#starships");
-// const navStarshipsBtn = document.querySelector("#nav-starships");
+const quotesBtn = document.querySelector("#quotes");
+const navquotesBtn = document.querySelector("#nav-quotes");
 const imgBtn1 = document.querySelector("#img-1");
 const imgBtn2 = document.querySelector("#img-2");
 // const navVehiclesBtn = document.querySelector("#nav-vehicles");
@@ -230,6 +238,35 @@ const deleteFromFavorites = (e) => {
   collectionRender();
 };
 
+// Create QUOTE Card
+
+const createQuoteCard = (arrayItem) => {
+  const newDiv = document.createElement("div");
+  newDiv.className = "quota-card";
+  const newIcon = document.createElement("i");
+  newIcon.className = "far fa-bookmark icon";
+  newIcon.addEventListener("click", addToFavorites);
+  newIcon.title = "Add to Favorites";
+  myFavorites.forEach((item) => {
+      if (item.id === arrayItem.id) {
+        newIcon.className = "far fa-bookmark inFav";
+        newIcon.removeEventListener("click", addToFavorites);
+        newIcon.addEventListener("click", deleteFromFavorites);
+        newIcon.title = "Remove";
+      }
+    });
+  newDiv.appendChild(newIcon);
+  const newQuotaTitle = document.createElement("h1");
+  const newQuotaName = document.createElement("p");
+  const newQuotaNameText = document.createTextNode(arrayItem.character);
+  const newQuotaText = document.createTextNode(arrayItem.sentence);
+  newQuotaTitle.appendChild(newQuotaText);
+  newQuotaName.appendChild(newQuotaNameText);
+  newDiv.appendChild(newQuotaName);
+  newDiv.appendChild(newQuotaTitle);
+  newDiv.setAttribute("data-id", arrayItem.id);
+  return newDiv;
+};
 // Create Card
 const createCard = (arrayItem) => {
   const newDiv = document.createElement("div");
@@ -239,19 +276,6 @@ const createCard = (arrayItem) => {
   newImg.alt = `${arrayItem.image} photo`;
   newDiv.appendChild(newImg);
   newImg.addEventListener("click", showImgFullPage);
-  const newIcon = document.createElement("i");
-  newIcon.className = "fa fa-heart-o icon";
-  newIcon.addEventListener("click", addToFavorites);
-  newIcon.title = "Add to Favorites";
-  myFavorites.forEach((item) => {
-      if (item.id === arrayItem.id) {
-        newIcon.className = "fa fa-heart inFav";
-        newIcon.removeEventListener("click", addToFavorites);
-        newIcon.addEventListener("click", deleteFromFavorites);
-        newIcon.title = "Remove";
-      }
-    });
-  newDiv.appendChild(newIcon);
   const newP = document.createElement("p");
   const newText = document.createTextNode(`${arrayItem.firstName} ${(arrayItem.lastName === 'None' || arrayItem.lastName === 'Unknown') ? '' :arrayItem.lastName}`);
   newP.appendChild(newText);
@@ -307,7 +331,7 @@ console.log('-------227-----')
   return newDiv;
 };
 //Render Collection Section
-const collectionRender = () => {
+const collectionRender = (collection) => {
   collageContainer.className = "collage-container-hidden";
   const collectionSection = document.querySelector("#collection-container");
   if (collectionSection) {
@@ -316,10 +340,43 @@ const collectionRender = () => {
   const newSection = document.createElement("section");
   newSection.id = "collection-container";
   newSection.className = "collection-container";
-  data.forEach((item) => {
-    const newDiv = createCard(item);
-    newSection.appendChild(newDiv);
-  });
+  newSection.setAttribute("data-key", collection);
+  switch (collection) {
+    case 'characters':
+      {
+        data.forEach((item) => {
+          const newDiv = createCard(item);
+          newSection.appendChild(newDiv);
+        });
+      }
+      
+      break;
+
+      case 'quotes':
+        {
+          quotesData[collection].map((item) => {
+            const newDiv = createQuoteCard(item);
+            newSection.appendChild(newDiv);
+          });
+        }
+        
+        break;
+        case "favorites":
+          {
+            Object.keys(myFavorites).forEach((key) => {
+              myFavorites[key].forEach((item) => {
+                const newDiv = createCard(item);
+                newSection.appendChild(newDiv);
+              });
+            });
+          }
+          
+          break;
+  
+    default:
+      break;
+  }
+
   main.appendChild(newSection);
   isToggled && toggleHandler();
 };
@@ -375,6 +432,7 @@ peopleBtn.addEventListener("click", collectionRenderHandler);
 locationBtn.addEventListener('click',  locationHandler)
 imgBtn1.addEventListener("click", collectionRenderHandler);
 imgBtn2.addEventListener("click", locationHandler);
+quotesBtn.addEventListener('click',collectionRenderHandler)
 // speciesBtn.addEventListener("click", collectionRenderHandler);
 // starshipsBtn.addEventListener("click", collectionRenderHandler);
 //vehiclesBtn.addEventListener("click", collectionRenderHandler);

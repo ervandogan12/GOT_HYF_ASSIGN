@@ -2,18 +2,22 @@
   box-sizing: border-box;
   margin: 0px;
   padding: 0px;
+
 }
 
 html,
 body {
+  background-color: rgb(50,50, 50);
   width: 100%;
   height: 100%;
   font-family: Arial, Helvetica, sans-serif;
   margin: 0
+  
 }
 
 /* Header Styles */
 header {
+  background-color: rgb(225,225, 226);
   display: flex;
   position: relative;
   flex-direction: column;
@@ -77,13 +81,14 @@ header {
   border: 1px solid black;
   border-radius: 30px;
   align-items: center;
+  border-color: white;
 }
 
 .search-input {
   width: 90%;
   border: none;
   background-color: transparent;
-  color: black;
+  color: white;
 }
 
 .search-input:focus {
@@ -95,7 +100,7 @@ header {
   width: 10%;
   height: 100%;
   margin-right: 8px;
-  color: black;
+  color: white;
 }
 
 .topnav {
@@ -157,9 +162,7 @@ main {
   max-height: 200px;
   margin-left: auto;
   margin-right: auto;
-  object-fit: cover;
-
-  size: auto;
+  object-fit:cover;
 }
 
 
@@ -241,7 +244,7 @@ main {
   top: 10px;
   right: 10px;
   font-size: 24px !important;
-  color: #fff;
+  color: black;
   cursor: pointer;
 }
 
@@ -253,6 +256,35 @@ main {
   color: #fff;
   cursor: pointer;
 }
+
+
+
+.quota-card {
+  padding-top: 60px;
+  text-align: center;
+  position: relative;
+  width: 400px;
+  height: 250px;
+  border: none;
+  border-radius: 15px;
+  background-color: #2980b9;
+}
+
+.quota-card h1 {
+color: #ccc;
+font-family: 'Courier New', Courier, monospace;
+font-style: italic;
+}
+
+.quota-card p{  
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    font-size: 18px !important;
+    color:rgb(54, 23, 23)
+ 
+}
+
 
 .deleteFav {
   font-size: 20px;
@@ -367,6 +399,25 @@ footer a:hover {
   /* Slidr Styles for mobile and tablets */
 
   .slider-wrapper .slide-button {
+    position: absolute;
+    top: 50%;
+    outline: none;
+    border: none;
+    height: 50px;
+    width: 50px;
+    z-index: 2;
+    color: #fff;
+    display: flex;
+    cursor: pointer;
+    font-size: 2.2rem;
+    background:white;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transform: translateY(-50%);
+  }
+
+  .slider-wrapper .slide-button {
     display: none !important;
   }
   .slider-wrapper .image-list {
@@ -382,6 +433,57 @@ footer a:hover {
     width: 20%;
   }
 
+  .slider-wrapper .slide-button:hover {
+    background: white;
+  }
+  .slider-wrapper .slide-button#prev-slide {
+    left: -25px;
+  }
+  .slider-wrapper .slide-button#next-slide {
+    right: -25px;
+  }
+
+  .container .slider-scrollbar {
+    height: 24px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
+  .slider-scrollbar .scrollbar-track {
+    background: #ccc;
+    width: 100%;
+    height: 2px;
+    display: flex;
+    align-items: center;
+    border-radius: 4px;
+    position: relative;
+  }
+  .slider-scrollbar:hover .scrollbar-track {
+    height: 4px;
+  }
+  .slider-scrollbar .scrollbar-thumb {
+    position: absolute;
+    background: #000;
+    top: 0;
+    bottom: 0;
+    width: 50%;
+    height: 100%;
+    cursor: grab;
+    border-radius: inherit;
+  }
+  .slider-scrollbar .scrollbar-thumb:active {
+    cursor: grabbing;
+    height: 8px;
+    top: -2px;
+  }
+  .slider-scrollbar .scrollbar-thumb::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -10px;
+    bottom: -10px;
+  }
  
 }
 
@@ -395,41 +497,17 @@ footer a:hover {
 
   position: relative;
 }
-.slider-wrapper .slide-button {
-  position: absolute;
-  top: 50%;
-  outline: none;
-  border: none;
-  height: 50px;
-  width: 50px;
-  z-index: 5;
-  color: #fff;
-  display: flex;
-  cursor: pointer;
-  font-size: 2.2rem;
-  background: #000;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  transform: translateY(-50%);
-}
-.slider-wrapper .slide-button:hover {
-  background: #404040;
-}
-.slider-wrapper .slide-button#prev-slide {
-  left: -25px;
-  display: none;
-}
-.slider-wrapper .slide-button#next-slide {
-  right: -25px;
-}
+
+
 .slider-wrapper .image-list {
   display: grid;
   grid-template-columns: repeat(10, 1fr);
-  gap: 18px;
+  gap: 58px;
   font-size: 0;
   list-style: none;
   margin-bottom: 20px;
+  margin-top: 20px;
+  margin-left: 30px;
   overflow-x: auto;
   scrollbar-width: none;
 }
@@ -437,50 +515,10 @@ footer a:hover {
   display: none;
 }
 .slider-wrapper .image-list .image-item {
-  width: 325px;
-  height: 400px;
+  width: 400px;
+  height: 500px;
   object-fit: cover;
 }
-.container .slider-scrollbar {
-  height: 24px;
-  width: 100%;
-  display: flex;
-  align-items: center;
-}
-.slider-scrollbar .scrollbar-track {
-  background: #ccc;
-  width: 100%;
-  height: 2px;
-  display: flex;
-  align-items: center;
-  border-radius: 4px;
-  position: relative;
-}
-.slider-scrollbar:hover .scrollbar-track {
-  height: 4px;
-}
-.slider-scrollbar .scrollbar-thumb {
-  position: absolute;
-  background: #000;
-  top: 0;
-  bottom: 0;
-  width: 50%;
-  height: 100%;
-  cursor: grab;
-  border-radius: inherit;
-}
-.slider-scrollbar .scrollbar-thumb:active {
-  cursor: grabbing;
-  height: 8px;
-  top: -2px;
-}
-.slider-scrollbar .scrollbar-thumb::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: -10px;
-  bottom: -10px;
-}
+
 
 /* slider finishes */
