@@ -112,13 +112,15 @@ getData();
 
 let quotesData;
 const getQuotesData = async () => {
-  const response = await fetch(
-    "https://ervandogan12.github.io/GotData/quotes.json"
-  );
+  const response = await fetch("https://ervandogan12.github.io/GotData/quotes.json");
   quotesData = await response.json();
-  console.log(quotesData);
+    // quotesData['locations'].forEach((item) => {
+    //   console.log(item);
+    // });
 };
 getQuotesData();
+
+
 
 let myFavorites = [];
 let foundItemsInSearch = [];
@@ -192,9 +194,11 @@ document.addEventListener("click", screenTouchToggle);
 
 //Show Image Full Screen
 const showImgFullPage = (e) => {
-  let fullPageImg = e.target.parentElement.parentElement.lastChild;
+  let fullPageImg = e.target.parentElement.firstChild;
+  console.log('---198---'+fullPageImg.textContent);
   fullPageImg.className = "full-page";
   fullPageImg.style.backgroundImage = "url(" + e.target.src + ")";
+
   fullPageImg.style.display = "block";
 };
 
@@ -301,7 +305,6 @@ const createCharCard = (arrayItem) => {
   newImg.src = arrayItem.imageUrl;
   newImg.alt = `${arrayItem.image} photo`;
   newDiv.appendChild(newImg);
-  newImg.addEventListener("click", showImgFullPage);
   const newP = document.createElement("p");
   const newText = document.createTextNode(
     `${arrayItem.firstName} ${
@@ -316,52 +319,36 @@ const createCharCard = (arrayItem) => {
   return newDiv;
 };
 
-// const createCardDetails = (collectionItem) => {
-//   const newDiv = document.createElement("div");
-//   newDiv.className = "card-details";
-//   const newImg = document.createElement("img");
-//   newImg.src = collectionItem.imageUrl;
-//   newImg.alt = `${collectionItem.firstName} photo`;
-//   newDiv.appendChild(newImg);
-//   newImg.addEventListener("click", showImgFullPage);
-//   const newIcon = document.createElement("i");
-//   newIcon.className = "fa fa-heart-o icon";
-//   newIcon.addEventListener("click", addToFavorites);
-//   newIcon.title = "Add to Favorites";
-//   Object.keys(myFavorites).forEach((key) => {
-//     myFavorites[key].forEach((item) => {
-//       if (item.name === collectionItem.firstName) {
-//         newIcon.className = "fa fa-heart inFav";
-//         newIcon.removeEventListener("click", addToFavorites);
-//         newIcon.addEventListener("click", deleteFromFavorites);
-//         newIcon.title = "Remove";
-//       }
-//     });
-//   });
-//   newDiv.appendChild(newIcon);
-//   const newUl = document.createElement("ul");
-//  let details = Object.keys(collectionItem);
-//  details.forEach(item=>{
+// Create character Card
+const createLocationCard = (arrayItem) => {
+  const newDiv = document.createElement("div");
+  newDiv.className = "location-card";
+  const newImg = document.createElement("img");
+  newImg.src = arrayItem.url;
+  newImg.alt = `Winter Is Coming!`;
+  newDiv.appendChild(newImg);
+  newImg.addEventListener("click", showImgFullPage);
+  const newPName = document.createElement("p");
+  const newNameText = document.createTextNode(`Name: ${arrayItem.name} `);
+  const newPType = document.createElement("p");
+  const newTypeText = document.createTextNode(`Type: ${arrayItem.type}`);
+  const newPloc = document.createElement("p");
+  const newLocText = document.createTextNode(`Location: ${arrayItem.location}`);
+  const newPrule = document.createElement("p");
+  const newRulText = document.createTextNode(`Rulers: ${arrayItem.rulers}`);
 
-//   let newDetails = document.createElement('li');
+  newPName.appendChild(newNameText);
+  newDiv.appendChild(newPName);
+  newPrule.appendChild(newRulText);
+  newDiv.appendChild(newPrule);
+  newPloc.appendChild(newLocText);
+  newDiv.appendChild(newPloc);
+  newPType.appendChild(newTypeText);
+  newDiv.appendChild(newPType);
+  newDiv.setAttribute("data-id", arrayItem._id);
+  return newDiv;
+};
 
-//   newDetails.textContent = collectionItem[item];
-
-//   newUl.appendChild(newDetails);
-
-//  });
-
-//  newDiv.appendChild(newUl);
-
-// console.log('-------227-----')
-//  console.log(details);
-//  console.log('-------229-----')
-//   // const newText = document.createTextNode(collectionItem.firstName);
-//   // newP.appendChild(newText);
-//   // newDiv.appendChild(newUl);
-//   return newDiv;
-// };
-//Render Collection Section
 const collectionRender = (collection) => {
   console.log("--351--");
   collageContainer.className = "collage-container-hidden";
@@ -386,6 +373,7 @@ const collectionRender = (collection) => {
 
     case "quotes":
       {
+        console.log('---388---');
         quotesData[collection].map((item) => {
           const newDiv = createQuoteCard(item);
           newSection.appendChild(newDiv);
@@ -395,22 +383,32 @@ const collectionRender = (collection) => {
       break;
     case "favorites":
       {
+
         Object.keys(myFavorites).forEach((key) => {
+          console.log('---400---');
           myFavorites[key].forEach((item) => {
+            console.log('---402---');
             const newDiv = createQuoteCard(item);
             newSection.appendChild(newDiv);
           });
         });
       }
+      break;
 
-      foundItemsInSearch.map((item) => {
-        const newDiv = createCard(item);
-        newSection.appendChild(newDiv);
-      });
+      case "locations":
+        {
+          quotesData[collection].map((item) => {
+            const newDiv = createLocationCard(item);
+            newSection.appendChild(newDiv);
+          });
+        }
+        break;
 
     case "searchSection":
       {
+        console.log('---415---');
         foundItemsInSearch.map((item) => {
+          console.log('---417---');
           const newDiv = createQuoteCard(item);
           newSection.appendChild(newDiv);
         });
@@ -440,16 +438,17 @@ const collectionRenderHandler = (e) => {
   collectionRender(collection);
 };
 
-const locationHandler = (e) => {
-  window.open("https://quartermaester.info");
-};
 
 const searchHandler = (e) => {
+console.log('---450---');
   const searchText = e.target.value.toLowerCase();
   foundItemsInSearch = [];
   Object.keys(quotesData).map((key) => {
+    console.log('---454---');
     quotesData[key].map((item) => {
+      console.log('---456---');
       if (searchText && item.character.toLowerCase().includes(searchText)) {
+        console.log('---458---');
         foundItemsInSearch.push(item);
       }
     });
@@ -477,9 +476,9 @@ window.addEventListener("scroll", showGoToTopButton);
 homeIcon.addEventListener("click", renderHomePage);
 searchInput.addEventListener("input", searchHandler);
 peopleBtn.addEventListener("click", collectionRenderHandler);
-locationBtn.addEventListener("click", locationHandler);
+locationBtn.addEventListener("click", collectionRenderHandler);
 imgBtn1.addEventListener("click", collectionRenderHandler);
-imgBtn2.addEventListener("click", locationHandler);
+imgBtn2.addEventListener("click", collectionRenderHandler);
 imgBtn3.addEventListener("click", collectionRenderHandler);
 quotesBtn.addEventListener("click", collectionRenderHandler);
 // speciesBtn.addEventListener("click", collectionRenderHandler);

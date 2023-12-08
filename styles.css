@@ -222,6 +222,7 @@ main {
   background-color: #fff;
 }
 
+
 .card img {
   width: 100%;
   max-width: 300px;
@@ -230,6 +231,32 @@ main {
   border-top-right-radius: 5px;
   border-top-left-radius: 5px;
   object-fit: cover;
+}
+
+.location-card {
+  position: relative;
+  width: 350px;
+  height: 450px;
+  border: none;
+  border-radius: 5px;
+  background-color: #2980b9;
+}
+
+.location-card img{
+  width: 300%;
+  max-width: 350px;
+  height: 80%;
+  border: none;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+  object-fit:cover;
+}
+
+.location-card p {
+  margin: auto;
+  font-family:Arial, Helvetica, sans-serif;
+  text-align: left;
+  color:white;
 }
 
 .card p {
