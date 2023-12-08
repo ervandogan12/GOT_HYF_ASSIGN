@@ -157,6 +157,7 @@ const goToTopButton = document.getElementById("goToTopButton");
 const renderHomePage = () => {
   collageContainer.className = "collage-container";
   const collectionSection = document.querySelector("#collection-container");
+  console.log('--160--'+collectionSection.className)
   if (collectionSection) {
     collectionSection.className = "collection-container-hidden";
   }
@@ -194,11 +195,11 @@ document.addEventListener("click", screenTouchToggle);
 
 //Show Image Full Screen
 const showImgFullPage = (e) => {
-  let fullPageImg = e.target.parentElement.firstChild;
-  console.log('---198---'+fullPageImg.textContent);
+  let fullPageImg = e.target.parentElement.lastChild;
+  console.log('---198---'+fullPageImg);
   fullPageImg.className = "full-page";
-  fullPageImg.style.backgroundImage = "url(" + e.target.src + ")";
-
+  console.log('---200---'+e.target.src);
+  fullPageImg.scr =  e.target.src;
   fullPageImg.style.display = "block";
 };
 
@@ -218,7 +219,7 @@ const addToFavorites = (e) => {
   const sentence = e.target.parentElement.lastChild.textContent;
   const collection = e.target.parentElement.parentElement.dataset.key;
 
-  Object.keys(quotesData).forEach((key) => {
+
     quotesData["quotes"].forEach((item) => {
       if (sentence === item.sentence) {
         if (myFavorites["quotes"]) {
@@ -233,7 +234,7 @@ const addToFavorites = (e) => {
         }
       }
     });
-  });
+
 
   localStorage.setItem("myFavorites", JSON.stringify(myFavorites));
   collectionRender(collection);
@@ -326,7 +327,6 @@ const createLocationCard = (arrayItem) => {
   const newImg = document.createElement("img");
   newImg.src = arrayItem.url;
   newImg.alt = `Winter Is Coming!`;
-  newDiv.appendChild(newImg);
   newImg.addEventListener("click", showImgFullPage);
   const newPName = document.createElement("p");
   const newNameText = document.createTextNode(`Name: ${arrayItem.name} `);
@@ -345,6 +345,7 @@ const createLocationCard = (arrayItem) => {
   newDiv.appendChild(newPloc);
   newPType.appendChild(newTypeText);
   newDiv.appendChild(newPType);
+  newDiv.appendChild(newImg);
   newDiv.setAttribute("data-id", arrayItem._id);
   return newDiv;
 };
@@ -443,16 +444,15 @@ const searchHandler = (e) => {
 console.log('---450---');
   const searchText = e.target.value.toLowerCase();
   foundItemsInSearch = [];
-  Object.keys(quotesData).map((key) => {
     console.log('---454---');
-    quotesData[key].map((item) => {
+    quotesData["quotes"].map((item) => {
       console.log('---456---');
       if (searchText && item.character.toLowerCase().includes(searchText)) {
         console.log('---458---');
         foundItemsInSearch.push(item);
       }
     });
-  });
+
   collectionRender("searchSection");
 };
 
