@@ -135,7 +135,7 @@ let isToggled = false;
 const main = document.querySelector("main");
 const collageContainer = document.querySelector("#collage-container");
 const toggleIcon = document.querySelector("#toggle-icon");
-const homeIcon = document.querySelector("#home-icon");
+const homeBackBtn = document.querySelector("#back-home");
 const peopleBtn = document.querySelector("#people");
 const navPeopleBtn = document.querySelector("#nav-people");
 const locationBtn = document.querySelector("#location");
@@ -195,16 +195,18 @@ document.addEventListener("click", screenTouchToggle);
 
 //Show Image Full Screen
 const showImgFullPage = (e) => {
-  let fullPageImg = e.target.parentElement.lastChild;
-  console.log('---198---'+fullPageImg);
-  fullPageImg.className = "full-page";
-  console.log('---200---'+e.target.src);
-  fullPageImg.scr =  e.target.src;
+
+  let fullPageImg = e.target.parentElement.parentElement.lastChild;
+  console.log('--199--'+fullPageImg);
+  fullPageImg.className = "location-fullpage";
+  fullPageImg.style.backgroundImage = "url(" + e.target.src + ")";
+   console.log('--202--'+ e.target.src);
+   console.log('--203--'+ fullPageImg.style.backgroundImage);
   fullPageImg.style.display = "block";
 };
-
 const abortFullPageImg = (e) => {
   e.target.style.display = "none";
+  console.log('--206--'+e.target);
 };
 
 //Clear Search Input
@@ -326,8 +328,10 @@ const createLocationCard = (arrayItem) => {
   newDiv.className = "location-card";
   const newImg = document.createElement("img");
   newImg.src = arrayItem.url;
-  newImg.alt = `Winter Is Coming!`;
+  newImg.alt = `${arrayItem.name} photo`;
+
   newImg.addEventListener("click", showImgFullPage);
+ 
   const newPName = document.createElement("p");
   const newNameText = document.createTextNode(`Name: ${arrayItem.name} `);
   const newPType = document.createElement("p");
@@ -347,6 +351,7 @@ const createLocationCard = (arrayItem) => {
   newDiv.appendChild(newPType);
   newDiv.appendChild(newImg);
   newDiv.setAttribute("data-id", arrayItem._id);
+
   return newDiv;
 };
 
@@ -357,6 +362,12 @@ const collectionRender = (collection) => {
   if (collectionSection) {
     collectionSection.remove();
   }
+
+  const fullPageImg = document.createElement("div");
+  fullPageImg.id = "fullPageImg";
+  fullPageImg.className = "full-page";
+  fullPageImg.addEventListener("click", abortFullPageImg);
+
   const newSection = document.createElement("section");
   newSection.id = "collection-container";
   newSection.className = "collection-container";
@@ -426,7 +437,7 @@ const collectionRender = (collection) => {
       }
       break;
   }
-
+  newSection.appendChild(fullPageImg);
   main.appendChild(newSection);
   isToggled && toggleHandler();
 };
@@ -473,7 +484,7 @@ const toggleHandler = () => {
 
 ////////////// EVENT LISTENERS //////////
 window.addEventListener("scroll", showGoToTopButton);
-homeIcon.addEventListener("click", renderHomePage);
+homeBackBtn.addEventListener("click", renderHomePage);
 searchInput.addEventListener("input", searchHandler);
 peopleBtn.addEventListener("click", collectionRenderHandler);
 locationBtn.addEventListener("click", collectionRenderHandler);

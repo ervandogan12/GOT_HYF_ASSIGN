@@ -51,17 +51,6 @@ header {
   position: absolute;
 }
 
-.home-icon {
-    width: 45px;
-    height: 45px;
-    margin-left: 10vw;
-    cursor: pointer;
-    transition: height 400ms, width 400ms;
-  }
-  .home-icon:hover {
-    width: 50px;
-    height: 50px;
-  }
 
 .search-container {
   display: flex;
@@ -198,7 +187,8 @@ main {
   z-index: 1;
 }
 
-.full-page {
+.location-fullpage {
+
   display: none;
   position: fixed;
   width: 100vw;
@@ -206,13 +196,14 @@ main {
   top: 0;
   margin-left: auto;
   margin-right: auto;
-  background-size: cover;
+  background-size:auto;
   background-repeat: no-repeat;
   background-position: center;
   background-color: rgba(0, 0, 0, 0.75);
   z-index: 2;
   object-fit: scale-down;
 }
+
 
 .card {
   position: relative;
@@ -251,6 +242,11 @@ main {
   border-top-right-radius: 5px;
   border-top-left-radius: 5px;
   object-fit:cover;
+}
+
+
+.location-card img:hover {
+ cursor: pointer;
 }
 
 .location-card p {
@@ -379,6 +375,17 @@ footer a:hover {
   display: none;
 }
 
+.btn {
+    float: right;
+    margin-top: 2px;
+    margin-right: 10px;
+    max-width: fit-content;
+    content: attr(title);
+  }
+  .btn:hover {
+    cursor: pointer;
+  } 
+
 @media only screen and (max-width: 768px) {
   .wide-screen-container {
     margin-top: 0;
@@ -394,13 +401,14 @@ footer a:hover {
     margin-right: 12px;
   }
 
-   .home-icon {
-      margin-top: 6px;
-      margin-right: 60px;
+   .btn {
+    float: right;
+    margin-top: 2px;
+    margin-right: 10px;
+    content:attr(title);
     }
-    .home-icon:hover {
-      width: 45px;
-      height: 45px;
+    .btn:hover {
+      cursor: pointer;
     } 
 
   /* new topbarnav menu resposiveness start */
@@ -557,5 +565,8 @@ footer a:hover {
   object-fit: cover;
 }
 
+.slider-wrapper .image-list .image-item:hover {
+  content:attr(title);
+}
 
 /* slider finishes */
