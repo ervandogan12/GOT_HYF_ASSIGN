@@ -16,18 +16,17 @@
 <body>
   <header>
     <div class="topnav" id="myTopnav">
-     <div id="toggle-navigation-list">
-      <a  id="people" data-key="characters">CHARACTERS</a>
-      <a  id="location" data-key="locations">LOCATIONS</a>
-      <a  id="quotes" data-key="quotes">QUOTES</a>
-      <a  id="favorites" data-key="favorites">FAVORITE QUOTES</a>
-      <a href="javascript:void(0);" class="icon" onclick="myFunction()">
-        <i class="fa fa-bars"></i>
-      </a>
-     </div>
+      <div id="toggle-navigation-list">
+        <a id="people" data-key="characters">CHARACTERS</a>
+        <a id="location" data-key="locations">LOCATIONS</a>
+        <a id="quotes" data-key="quotes">QUOTES</a>
+        <a id="favorites" data-key="favorites">FAVORITE QUOTES</a>
+        <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+          <i class="fa fa-bars"></i>
+        </a>
+      </div>
 
     </div>
-<br>
     <div class="search-container">
       <div class="search-field">
         <input type="text" id="search-input" class="search-input" placeholder="Who Said What?">
@@ -36,63 +35,76 @@
         </span>
       </div>
     </div>
-   <br>
-   
+    <br>
+    <button id="back-home" class="btn" title="Homepage"><i class="fa fa-home"></i> Home</button>
   </header>
   <main>
 
-    <button  id="back-home" class="btn"  title="Go Back Homepage"><i class="fa fa-home"></i> Home</button>
     <div class="wide-screen-container">
       <div class="toggle-container" id="toggle-container">
         <div class="toggle-icon" id="toggle-icon">
         </div>
       </div>
-    <div id="toggle-navigation" class="toggle-navigation">
-      <ul id="toggle-navigation-list">
-        <li id="nav-people" data-key="characters" class="list-item">CHARACTERS</li>
-        <li id="nav-location" data-key="locations" class="list-item">LOCATIONS</li>
-        <li id="nav-quotes" data-key="quotes" class="list-item">QUOTES</li>
-        <li id="nav-favorites" data-key="favorites" class="list-item">FAVORITE QUOTES</li>
-      </ul>
-    </div>
+      <div id="toggle-navigation" class="toggle-navigation">
+        <ul id="toggle-navigation-list">
+          <li id="nav-people" data-key="characters" class="list-item">CHARACTERS</li>
+          <li id="nav-location" data-key="locations" class="list-item">LOCATIONS</li>
+          <li id="nav-quotes" data-key="quotes" class="list-item">QUOTES</li>
+          <li id="nav-favorites" data-key="favorites" class="list-item">FAVORITE QUOTES</li>
+        </ul>
+      </div>
 
-    <section class="collage-container" id="collage-container">
-        <div class="container">
-          <div class="slider-wrapper">
-            <a id="prev-slide" class="slide-button material-symbols-rounded">
-            </a>
-            <ul class="image-list">
-              <img id='img-1' data-key="characters" title="GO TO CHARACTERS" class="image-item" src="https://mrwallpaper.com/images/high/game-of-thrones-face-frames-ajhzgv5cwhx6az5e.webp" alt="img-1" />
-              <img  id='img-2' data-key="locations" title="GO TO LOCATIONS"  class="image-item" src="https://mrwallpaper.com/images/high/game-of-thrones-sheepshead-hills-q4vovtj58saj5jld.webp" alt="img-2" />
-              <img  id='img-3' data-key="quotes"title="GO TO QUOTAS"   class="image-item" src="https://mrwallpaper.com/images/high/not-today-quote-card-1dv83qwrw406la23.webp" alt="img-3" />
-            
-            </ul>
-            <button id="next-slide" class="slide-button material-symbols-rounded">
-            </button>
+      <section class="collage-container" id="collage-container">
+
+        <div class="slideshow-container">
+
+          <div class="mySlides fade">
+            <div class="numbertext">1 / 3</div>
+            <img id='img-1' data-key="characters" title="CHARACTERS" class="image-item"
+              src="https://wallpapercave.com/wp/wp9153748.jpg" alt="img-1" />
           </div>
-          <div class="slider-scrollbar">
-            <div class="scrollbar-track">
-              <div class="scrollbar-thumb"></div>
-            </div>
+
+          <div class="mySlides fade">
+            <div class="numbertext">2 / 3</div>
+            <img id='img-2' data-key="locations" title="LOCATIONS" class="image-item"
+              src="https://wallpapercave.com/wp/wp3978210.jpg" alt="img-2" />
           </div>
+
+          <div class="mySlides fade">
+            <div class="numbertext">3 / 3</div>
+            <img id='img-3' data-key="quotes" title="QUOTAS" class="image-item"
+              src="https://wallpapercave.com/wp/wp12084976.jpg" alt="img-3" />
+          </div>
+
+
+          <a class="prev" onclick="plusSlides(-1)">❮</a>
+          <a class="next" onclick="plusSlides(1)">❯</a>
+
+          <div style="text-align:center">
+            <span class="dot" onclick="currentSlide(1)"></span>
+            <span class="dot" onclick="currentSlide(2)"></span>
+            <span class="dot" onclick="currentSlide(3)"></span>
+          </div>
+
+
         </div>
-    </section>
 
-    <section class="category-container-hidden" id="category-container">
+      </section>
 
-    </section>
+      <section class="category-container-hidden" id="category-container">
+
+      </section>
 
 
-    <button class="scrollToTopBtn">☝️</button>
+      <button class="scrollToTopBtn">☝️</button>
   </main>
+  <br>
+  <br>
   <footer>
-    <p>DESIGNED AND DEVELOPED BY <span class="name">ERHAN KORAL</span> <i class="fa fa-creative-commons"></i><i
+    <p>DESIGNED AND DEVELOPED BY <span class="name">Dogan Sof </span> <i class="fa fa-creative-commons"></i><i
         class='fab fa-creative-commons-by'></i><i class='fab fa-creative-commons-nc'></i> 2023</p>
   </footer>
   <script src="scripts.js"></script>
 </body>
 
 </html>
-
-
-
