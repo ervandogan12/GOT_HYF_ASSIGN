@@ -60,6 +60,12 @@ header {
   margin-right: 7vw;
   justify-content: center;
   align-items: center;
+
+}
+.search-container ::placeholder {
+  
+  font-size: 14px;
+
 }
 
 .search-field {
@@ -67,17 +73,19 @@ header {
   width: 20vw;
   max-width: 200px;
   padding: 0 6px 0 6px;
-  border: 1px solid black;
+  border: 1.5px solid;
   border-radius: 30px;
   align-items: center;
-  border-color: white;
+  border-color: #2980b9;
 }
 
 .search-input {
   width: 90%;
   border: none;
   background-color: transparent;
-  color: white;
+  color: black;
+  font-family: Arial, Helvetica, sans-serif;
+  
 }
 
 .search-input:focus {
@@ -89,7 +97,7 @@ header {
   width: 10%;
   height: 100%;
   margin-right: 8px;
-  color: white;
+  color:#2980b9;
 }
 
 .topnav {
@@ -155,7 +163,7 @@ main {
 }
 
 
-.collection-container {
+.category-container {
   display: flex;
   width: 90%;
   max-width: 100%;
@@ -166,7 +174,7 @@ main {
   gap: 25px;
 }
 
-.collection-container-hidden {
+.category-container-hidden {
   display: none;
 }
 
@@ -174,18 +182,34 @@ main {
   display: none;
 } */
 
-#goToTopButton {
-  display: none;
-  width: 50px;
-  height: 50px;
-  top: 80vh;
-  right: 3vw;
-  border-radius: 5px;
-  border-color: #ffe81f;
-  background-color: #ffe81f;
+.scrollToTopBtn {
+  background-color: rgb(100, 143, 111);
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 28px;
+  line-height: 58px;
+  width: 58px;
+
+  /* place it at the bottom right corner */
   position: fixed;
-  z-index: 1;
+  bottom: 20px;
+  right: 20px;
+  /* keep it at the top of everything else */
+  z-index: 100;
+  /* hide with opacity */
+  opacity: 0;
+  /* also add a translate effect */
+  transform: translateY(100px);
+  /* and a transition */
+  transition: all 0.8s ease;
 }
+
+.showBtn {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 
 .location-fullpage {
 
@@ -305,7 +329,7 @@ main {
 
 .quota-card h1 {
 color: #ccc;
-font-family: 'Courier New', Courier, monospace;
+font-family: Arial, Helvetica, sans-serif;
 font-style: italic;
 }
 
@@ -313,8 +337,8 @@ font-style: italic;
     position: absolute;
     bottom: 10px;
     right: 10px;
-    font-size: 18px !important;
-    color:rgb(54, 23, 23)
+    font-size: 24px !important;
+    color:aliceblue
  
 }
 
@@ -395,6 +419,11 @@ footer a:hover {
 
   .search-container {
     margin-left: 30px;
+  }
+  .search-container ::placeholder {
+  
+    font-size: 8px;
+  
   }
 
   .material-icons {

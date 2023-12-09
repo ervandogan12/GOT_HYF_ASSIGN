@@ -151,32 +151,64 @@ const navFavoritesBtn = document.querySelector("#nav-favorites");
 const bar = document.querySelectorAll("span");
 const searchInput = document.getElementById("search-input");
 const fullPageImg = document.getElementById("fullPageImg");
-const goToTopButton = document.getElementById("goToTopButton");
+const scrollToTopBtn = document.querySelector(".scrollToTopBtn");
 
 //////////// HELPER FUNCTIONS ////////////
 const renderHomePage = () => {
   collageContainer.className = "collage-container";
-  const collectionSection = document.querySelector("#collection-container");
-  console.log('--160--'+collectionSection.className)
-  if (collectionSection) {
-    collectionSection.className = "collection-container-hidden";
+  const categorySection = document.querySelector("#category-container");
+  console.log('--160--'+categorySection.className)
+  if (categorySection) {
+    categorySection.className = "category-container-hidden";
   }
   isToggled && toggleHandler();
   clearSearchInput();
 };
 
 //Go to Top Button
-const goToTop = () => {
-  window.scrollTo({ top: 0, behavior: "smooth" });
-};
 
-const showGoToTopButton = () => {
-  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-    goToTopButton.style.display = "block";
+
+var rootElement = document.documentElement;
+
+function handleScroll() {
+  // Do something on scroll
+  console.log("--175--");
+  var scrollTotal = rootElement.scrollHeight - rootElement.clientHeight;
+  if (rootElement.scrollTop / scrollTotal > 0.08) {
+    console.log("--178--");
+    // Show button
+    scrollToTopBtn.classList.add("showBtn");
   } else {
-    goToTopButton.style.display = "none";
+    console.log("--182--");
+    // Hide button
+    scrollToTopBtn.classList.remove("showBtn");
   }
-};
+}
+
+function scrollToTop() {
+  // Scroll to top logic
+  console.log("--190--");
+  rootElement.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+}
+
+
+
+
+
+// const goToTop = () => {
+//   window.scrollTo({ top: 0, behavior: "smooth" });
+// };
+
+// const showGoTopBtn = () => {
+//   if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+//     goTopBtn.style.display = "block";
+//   } else {
+//     goTopBtn.style.display = "none";
+//   }
+// };
 
 //Abort Navigation Menu
 const screenTouchToggle = (e) => {
@@ -219,7 +251,7 @@ const clearSearchInput = () => {
 //Add to / Remove from Favorites
 const addToFavorites = (e) => {
   const sentence = e.target.parentElement.lastChild.textContent;
-  const collection = e.target.parentElement.parentElement.dataset.key;
+  const category = e.target.parentElement.parentElement.dataset.key;
 
 
     quotesData["quotes"].forEach((item) => {
@@ -239,13 +271,13 @@ const addToFavorites = (e) => {
 
 
   localStorage.setItem("myFavorites", JSON.stringify(myFavorites));
-  collectionRender(collection);
+  categoryRender(category);
 };
 
 const deleteFromFavorites = (e) => {
   const sentence = e.target.parentElement.lastChild.textContent;
-  const collection = e.target.parentElement.parentElement.dataset.key;
-  console.log(collection+"--242--");
+  const category = e.target.parentElement.parentElement.dataset.key;
+  console.log(category+"--242--");
   Object.keys(myFavorites).forEach((key) => {
     console.log("--234--");
     myFavorites[key].forEach((item) => {
@@ -266,7 +298,7 @@ const deleteFromFavorites = (e) => {
   console.log("--249--");
   localStorage.setItem("myFavorites", JSON.stringify(myFavorites));
   console.log("--251--");
-  collectionRender(collection);
+  categoryRender(category);
 };
 
 // Create QUOTE Card
@@ -355,12 +387,12 @@ const createLocationCard = (arrayItem) => {
   return newDiv;
 };
 
-const collectionRender = (collection) => {
+const categoryRender = (category) => {
   console.log("--351--");
   collageContainer.className = "collage-container-hidden";
-  const collectionSection = document.querySelector("#collection-container");
-  if (collectionSection) {
-    collectionSection.remove();
+  const categorySection = document.querySelector("#category-container");
+  if (categorySection) {
+    categorySection.remove();
   }
 
   const fullPageImg = document.createElement("div");
@@ -369,10 +401,10 @@ const collectionRender = (collection) => {
   fullPageImg.addEventListener("click", abortFullPageImg);
 
   const newSection = document.createElement("section");
-  newSection.id = "collection-container";
-  newSection.className = "collection-container";
-  newSection.setAttribute("data-key", collection);
-  switch (collection) {
+  newSection.id = "category-container";
+  newSection.className = "category-container";
+  newSection.setAttribute("data-key", category);
+  switch (category) {
     case "characters":
       {
         data.forEach((item) => {
@@ -386,7 +418,7 @@ const collectionRender = (collection) => {
     case "quotes":
       {
         console.log('---388---');
-        quotesData[collection].map((item) => {
+        quotesData[category].map((item) => {
           const newDiv = createQuoteCard(item);
           newSection.appendChild(newDiv);
         });
@@ -409,7 +441,7 @@ const collectionRender = (collection) => {
 
       case "locations":
         {
-          quotesData[collection].map((item) => {
+          quotesData[category].map((item) => {
             const newDiv = createLocationCard(item);
             newSection.appendChild(newDiv);
           });
@@ -443,11 +475,11 @@ const collectionRender = (collection) => {
 };
 
 //////////// EVENT HANDLERS /////////////////////
-const collectionRenderHandler = (e) => {
-  let collection = e.target.dataset.key;
+const categoryRenderHandler = (e) => {
+  let category = e.target.dataset.key;
   toggleHandler();
   clearSearchInput();
-  collectionRender(collection);
+  categoryRender(category);
 };
 
 
@@ -464,7 +496,7 @@ console.log('---450---');
       }
     });
 
-  collectionRender("searchSection");
+  categoryRender("searchSection");
 };
 
 const toggleHandler = () => {
@@ -483,23 +515,23 @@ const toggleHandler = () => {
 };
 
 ////////////// EVENT LISTENERS //////////
-window.addEventListener("scroll", showGoToTopButton);
 homeBackBtn.addEventListener("click", renderHomePage);
 searchInput.addEventListener("input", searchHandler);
-peopleBtn.addEventListener("click", collectionRenderHandler);
-locationBtn.addEventListener("click", collectionRenderHandler);
-imgBtn1.addEventListener("click", collectionRenderHandler);
-imgBtn2.addEventListener("click", collectionRenderHandler);
-imgBtn3.addEventListener("click", collectionRenderHandler);
-quotesBtn.addEventListener("click", collectionRenderHandler);
-// speciesBtn.addEventListener("click", collectionRenderHandler);
-// starshipsBtn.addEventListener("click", collectionRenderHandler);
-//vehiclesBtn.addEventListener("click", collectionRenderHandler);
-favoritesBtn.addEventListener("click", collectionRenderHandler);
+peopleBtn.addEventListener("click", categoryRenderHandler);
+locationBtn.addEventListener("click", categoryRenderHandler);
+imgBtn1.addEventListener("click", categoryRenderHandler);
+imgBtn2.addEventListener("click", categoryRenderHandler);
+imgBtn3.addEventListener("click", categoryRenderHandler);
+quotesBtn.addEventListener("click", categoryRenderHandler);
+// speciesBtn.addEventListener("click", categoryRenderHandler);
+// starshipsBtn.addEventListener("click", categoryRenderHandler);
+//vehiclesBtn.addEventListener("click", categoryRenderHandler);
+favoritesBtn.addEventListener("click", categoryRenderHandler);
 toggleIcon.addEventListener("click", toggleHandler);
-navPeopleBtn.addEventListener("click", collectionRenderHandler);
-// navSpeciesBtn.addEventListener("click", collectionRenderHandler);
-// navStarshipsBtn.addEventListener("click", collectionRenderHandler);
-// navVehiclesBtn.addEventListener("click", collectionRenderHandler);
-navFavoritesBtn.addEventListener("click", collectionRenderHandler);
-goToTopButton.addEventListener("click", goToTop);
+navPeopleBtn.addEventListener("click", categoryRenderHandler);
+// navSpeciesBtn.addEventListener("click", categoryRenderHandler);
+// navStarshipsBtn.addEventListener("click", categoryRenderHandler);
+// navVehiclesBtn.addEventListener("click", categoryRenderHandler);
+navFavoritesBtn.addEventListener("click", categoryRenderHandler);
+scrollToTopBtn.addEventListener("click", scrollToTop);
+document.addEventListener("scroll", handleScroll);
