@@ -280,24 +280,35 @@ const createQuoteCard = (arrayItem) => {
 };
 // Create character Card
 const createCharCard = (arrayItem) => {
-  const newDiv = document.createElement("div");
-  newDiv.className = "card";
+  const newDivCard = document.createElement("div");
+  const newDivInner = document.createElement("div");
+  const newDivFront = document.createElement("div");
+  const newDivBack = document.createElement("div");
+  newDivCard.className = "card";
+  newDivInner.className="card-inner";
+  newDivFront.className="card-front";
+  newDivBack.className="card-back";
   const newImg = document.createElement("img");
   newImg.src = arrayItem.imageUrl;
   newImg.alt = `${arrayItem.image} photo`;
-  newDiv.appendChild(newImg);
-  const newP = document.createElement("p");
-  const newText = document.createTextNode(
-    `${arrayItem.firstName} ${
-      arrayItem.lastName === "None" || arrayItem.lastName === "Unknown"
-        ? ""
-        : arrayItem.lastName
-    }`
-  );
-  newP.appendChild(newText);
-  newDiv.appendChild(newP);
-  newDiv.setAttribute("data-id", arrayItem.id);
-  return newDiv;
+  newDivFront.appendChild(newImg);
+  newDivInner.appendChild(newDivFront);
+  newDivInner.appendChild(newDivBack);
+  newDivCard.appendChild(newDivInner);
+  const nameP = document.createElement("p");
+  const namePtext = document.createTextNode(`NAME: ${arrayItem.fullName}`);
+  nameP.appendChild(namePtext);
+  newDivBack.appendChild(nameP);
+  const titleP = document.createElement("p");
+  const titlePtext = document.createTextNode(`TITLE: ${arrayItem.title}`);
+  titleP.appendChild(titlePtext);
+  newDivBack.appendChild(titleP);
+  const familyP = document.createElement("p");
+  const familyPtext = document.createTextNode(`FAMILY: ${arrayItem.family}`);
+  familyP.appendChild(familyPtext);
+  newDivBack.appendChild(familyP);
+  newDivCard.setAttribute("data-id", arrayItem.id);
+  return newDivCard;
 };
 
 // Create character Card
