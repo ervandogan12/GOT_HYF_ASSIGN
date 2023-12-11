@@ -7,7 +7,7 @@
 
 html,
 body {
-  background-color: rgb(50,50, 50);
+  /* background-image: url("https://www.freecodecamp.org/news/content/images/size/w2000/2021/06/w-qjCHPZbeXCQ-unsplash.jpg"); */
   width: 100%;
   height: 100%;
   font-family: Arial, Helvetica, sans-serif;
@@ -21,33 +21,18 @@ header {
   display: flex;
   position: relative;
   flex-direction: column;
-  margin-left: auto;
-  margin-right: auto;
   border-bottom-color: 1px solid #fff;
-  justify-content: space-between;
   background-color: rgb(231, 233, 235);
   max-width: 100%;
 }
 
-.logo-img {
-  height: 10vh;
-  margin-top: 5vh;
-}
 
-.logo-title {
-  margin-top: 2px;
-  font-size: medium;
-  font-family: Roboto;
-  text-align: center;
-  letter-spacing: 0.3em;
-  color: #fff;
-}
 
 .wide-screen-container {
   margin-top: 0;
   display: flex;
-  width: 100vw;
-  height: 55px;
+  width: 100%;
+  height: 50%;
   margin-top: 10vh;
   justify-content: space-between;
   position: absolute;
@@ -55,34 +40,34 @@ header {
 
 
 .search-container {
-  display: flex;
-  padding-top: 5px;
-
-  float: center;
-  margin-right: 7vw;
-  justify-content: center;
-  align-items: center;
+  background-color: rgb(210, 195, 195);
+  padding-top: 15px;
+  max-width: 100%;
+  padding-left: 15px;
 
 }
 .search-container ::placeholder {
   
   font-size: 14px;
+  color:black;
+  opacity: 0.6;
+  
 
 }
 
 .search-field {
   display: flex;
+  float: left;
   width: 20vw;
   max-width: 200px;
-  padding: 0 6px 0 6px;
-  border: 1.5px solid;
+  border: 2px solid;
   border-radius: 30px;
   align-items: center;
-  border-color: #2980b9;
+  border-color: #0b0b0b;
 }
 
 .search-input {
-  width: 90%;
+  width: 100%;
   border: none;
   background-color: transparent;
   color: black;
@@ -99,7 +84,8 @@ header {
   width: 10%;
   height: 100%;
   margin-right: 8px;
-  color:#2980b9;
+  color:#070707;
+  opacity: 0.6;
 }
 
 .topnav {
@@ -135,8 +121,8 @@ header {
 
 /* Main Styles */
 main {
-  width: 100%;
-  min-height: 68%;
+ 
+  min-height: 100%;
   margin-left: auto;
   margin-right: auto;
   position: relative;
@@ -147,22 +133,12 @@ main {
   display: flex;
   width: 100%;
   max-width: 100%;
-  height: 100%;
+  height: 400px;
   margin: auto;
 }
 
 .collage-container-hidden {
   display: none;
-}
-
-.collage-img {
-  width: 100%;
-  max-width: 100%;
-
-  max-height: 200px;
-  margin-left: auto;
-  margin-right: auto;
-  object-fit:cover;
 }
 
 
@@ -262,12 +238,14 @@ main {
 .card-front {
   background-color: #bbb;
   color:wheat;
+  border-radius: 7px;
 }
 
 .card-back {
   background-color: #2980b9;
   color: white;
   transform: rotateY(180deg);
+  border-radius: 5px;
 }
 
 .card img {
@@ -299,7 +277,7 @@ main {
 .location-card img{
   width: 300%;
   max-width: 350px;
-  height: 80%;
+  height: 85%;
   border: none;
   border-top-right-radius: 5px;
   border-top-left-radius: 5px;
@@ -383,26 +361,23 @@ font-style: italic;
 
 /* Footer Styles */
 footer {
+  
+  background-color: #ffe81f;
 
-  height: 5%;
-  margin-top: 100px;
-  margin-left: auto;
-  margin-right: auto;
+  max-width: 100%;
   color: white;
   padding-top: 80px;
 }
 
 footer p {
-  margin: 3px;
+  margin: 7px;
   font-family:Arial, Helvetica, sans-serif;
   font-size: x-small;
   text-align: center;
+  background-color: red;
+
 }
 
-footer p:nth-last-of-type(1) {
-  margin-top: 5px;
-  font-size: xx-small;
-}
 
 footer span {
   color: rgb(247, 197, 197);
@@ -432,28 +407,39 @@ footer a:hover {
 .toggle-pushed-navigation {
   display: none;
 }
+.home-button{
+  float: right;
+  padding-right: 15px;
+}
 
 .btn {
-    float: right;
-    margin-left: 5px;
-    max-width: 50px;
+  border-radius: 30px;
+
+    margin-right: 25px;
+    width: 100px;
+    height: 30px;
     content: attr(title);
-    background-color: rgb(164, 82, 82);
+    background-color: rgb(82, 164, 98);
   }
   .btn:hover {
     cursor: pointer;
   }
 
 @media only screen and (max-width: 768px) {
+  .prev, .next {
+    margin-top:40% ; 
+  }
+  .image-item{
+    object-fit:cover;
+    height:1000px;
+  }
+ 
   .wide-screen-container {
     margin-top: 0;
+    height:50%;
     position: unset;
-    justify-content: center;
   }
 
-  .search-container {
-    margin-left: 30px;
-  }
   .search-container ::placeholder {
   
     font-size: 8px;
@@ -512,18 +498,23 @@ footer a:hover {
 }
 
 /* slider starts */
-.image-item {
-  vertical-align:super;
-  width: 100%;
-  margin-bottom: -100px;
-}
 
 /* Slideshow container */
 .slideshow-container {
+  height: 400px;
   max-width: 100%;
   position: relative;
-  margin: auto;
+  
+} 
+
+.image-item {
+
+  width: 100%;
+  margin-bottom: -100px;
+  object-fit:cover;
+  
 }
+
 
 /* Next & previous buttons */
 .prev, .next {
@@ -532,10 +523,9 @@ footer a:hover {
   top: 50%;
   width: auto;
   padding: 16px;
-  margin-top: -35px;
   color: white;
   font-weight: bold;
-  font-size: 24px;
+  font-size: 32px;
   transition: 0.6s ease;
   border-radius: 0 3px 3px 0;
   user-select: none;
@@ -549,20 +539,10 @@ footer a:hover {
 
 /* On hover, add a black background color with a little bit see-through */
 .prev:hover, .next:hover {
+  width: 50px;
   background-color: rgba(240, 236, 236, 0.8);
 }
 
-/* Caption text */
-.text {
-  color: #f2f2f2;
-  font-size: 15px;
-  padding: 8px 12px;
-  padding-bottom: -8px;
-  position: absolute;
-  bottom: 8px;
-  width: 100%;
-  text-align: center;
-}
 
 /* Number text (1/3 etc) */
 .numbertext {
@@ -585,17 +565,28 @@ footer a:hover {
 }
 
 @media only screen and (max-width: 300px) {
-  .prev, .next,.text {font-size: 11px}
+  .prev, .next {
+    font-size: 11px
+  }
 }
 @media only screen and (min-width: 768px) {
   .image-item {
     margin-top: -76px;
-  }
 
+  }
+  .numbertext {
+
+    margin-top: -70px;
+  }
   .btn {
 
     margin-bottom: 10px;
 
+    }
+    
+
+    .collage-container {
+      max-height: 400px;
     }
 }
 /* slider finishes */
