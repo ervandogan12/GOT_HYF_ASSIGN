@@ -1,6 +1,6 @@
 //navbar start//
 
-function myFunction() {
+function myNavFunction() {
   var x = document.getElementById("myTopnav");
   if (x.className === "topnav") {
     x.className += " responsive";
@@ -15,19 +15,25 @@ let slideIndex = 1;
 showSlides(slideIndex);
 
 function plusSlides(n) {
+  console.log('--18--'+slideIndex);
   showSlides(slideIndex += n);
+  console.log('--20--'+slideIndex);
 }
 
 function currentSlide(n) {
   showSlides(slideIndex = n);
+  console.log('--18--'+slideIndex);
 }
 
 function showSlides(n) {
   let i;
   let slides = document.getElementsByClassName("mySlides");
+  console.log('--30--'+slides.length);
   if (n > slides.length) {slideIndex = 1}    
-  if (n < 1) {slideIndex = slides.length}
+  if (n < 1) {slideIndex = slides.length
+    console.log('--32--'+slideIndex);}
   for (i = 0; i < slides.length; i++) {
+    console.log('--34--'+slideIndex);
     slides[i].style.display = "none";  
   }
 
@@ -38,7 +44,7 @@ function showSlides(n) {
 
 let data;
 
-const getData = async () => {
+const getCharData = async () => {
   const url = "https://game-of-thrones1.p.rapidapi.com/Characters";
   const options = {
     method: "GET",
@@ -51,7 +57,7 @@ const getData = async () => {
   let response = await fetch(url, options);
   data = await response.json();
 };
-getData();
+getCharData();
 
 let quotesData;
 const getQuotesData = async () => {
@@ -74,13 +80,13 @@ if (favorites) {
 }
 let isToggled = false;
 
-//////////// ELEMENT SELECTORS ////////////
+// Selectors//
+const homeBackBtn = document.querySelector("#back-home");
+const characterBtn = document.querySelector("#character");
+const navCharacterBtn = document.querySelector("#nav-character");
 const main = document.querySelector("main");
 const collageContainer = document.querySelector("#collage-container");
 const toggleIcon = document.querySelector("#toggle-icon");
-const homeBackBtn = document.querySelector("#back-home");
-const peopleBtn = document.querySelector("#people");
-const navPeopleBtn = document.querySelector("#nav-people");
 const locationBtn = document.querySelector("#location");
 const navlocationBtn = document.querySelector("#nav-location");
 const quotesBtn = document.querySelector("#quotes");
@@ -88,7 +94,6 @@ const navquotesBtn = document.querySelector("#nav-quotes");
 const imgBtn1 = document.querySelector("#img-1");
 const imgBtn2 = document.querySelector("#img-2");
 const imgBtn3 = document.querySelector("#img-3");
-// const navVehiclesBtn = document.querySelector("#nav-vehicles");
 const favoritesBtn = document.querySelector("#favorites");
 const navFavoritesBtn = document.querySelector("#nav-favorites");
 const bar = document.querySelectorAll("span");
@@ -118,7 +123,10 @@ function handleScroll() {
   console.log("--175--");
   var scrollTotal = rootElement.scrollHeight - rootElement.clientHeight;
   if (rootElement.scrollTop / scrollTotal > 0.08) {
-    console.log("--178--");
+    console.log("--120--"+rootElement.scrollHeight);
+    console.log("--121--"+rootElement.clientHeight);
+    console.log("--122--"+scrollTotal);
+    console.log("--123--"+rootElement.scrollTop / scrollTotal);
     // Show button
     scrollToTopBtn.classList.add("showBtn");
   } else {
@@ -139,21 +147,7 @@ function scrollToTop() {
 
 
 
-
-
-// const goToTop = () => {
-//   window.scrollTo({ top: 0, behavior: "smooth" });
-// };
-
-// const showGoTopBtn = () => {
-//   if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-//     goTopBtn.style.display = "block";
-//   } else {
-//     goTopBtn.style.display = "none";
-//   }
-// };
-
-//Abort Navigation Menu
+//Abort Nav Menu
 const screenTouchToggle = (e) => {
   if (e.target.id === "toggle-navigation") {
   } else if (e.target.id === "toggle-navigation-list") {
@@ -468,24 +462,18 @@ const toggleHandler = () => {
   }
 };
 
-////////////// EVENT LISTENERS //////////
+//Listeners//
 homeBackBtn.addEventListener("click", renderHomePage);
 searchInput.addEventListener("input", searchHandler);
-peopleBtn.addEventListener("click", categoryRenderHandler);
+characterBtn.addEventListener("click", categoryRenderHandler);
 locationBtn.addEventListener("click", categoryRenderHandler);
 imgBtn1.addEventListener("click", categoryRenderHandler);
 imgBtn2.addEventListener("click", categoryRenderHandler);
 imgBtn3.addEventListener("click", categoryRenderHandler);
 quotesBtn.addEventListener("click", categoryRenderHandler);
-// speciesBtn.addEventListener("click", categoryRenderHandler);
-// starshipsBtn.addEventListener("click", categoryRenderHandler);
-//vehiclesBtn.addEventListener("click", categoryRenderHandler);
 favoritesBtn.addEventListener("click", categoryRenderHandler);
 toggleIcon.addEventListener("click", toggleHandler);
-navPeopleBtn.addEventListener("click", categoryRenderHandler);
-// navSpeciesBtn.addEventListener("click", categoryRenderHandler);
-// navStarshipsBtn.addEventListener("click", categoryRenderHandler);
-// navVehiclesBtn.addEventListener("click", categoryRenderHandler);
+navCharacterBtn.addEventListener("click", categoryRenderHandler);
 navFavoritesBtn.addEventListener("click", categoryRenderHandler);
 scrollToTopBtn.addEventListener("click", scrollToTop);
 document.addEventListener("scroll", handleScroll);

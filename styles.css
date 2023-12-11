@@ -7,11 +7,12 @@
 
 html,
 body {
-  /* background-image: url("https://www.freecodecamp.org/news/content/images/size/w2000/2021/06/w-qjCHPZbeXCQ-unsplash.jpg"); */
+  background-color: rgb(210, 195, 195);
   width: 100%;
   height: 100%;
   font-family: Arial, Helvetica, sans-serif;
   margin: 0
+
   
 }
 
@@ -362,7 +363,6 @@ font-style: italic;
 /* Footer Styles */
 footer {
   
-  background-color: #ffe81f;
 
   max-width: 100%;
   color: white;
@@ -374,18 +374,19 @@ footer p {
   font-family:Arial, Helvetica, sans-serif;
   font-size: x-small;
   text-align: center;
-  background-color: red;
+  color: black;
+
 
 }
 
 
 footer span {
-  color: rgb(247, 197, 197);
+  color: rgb(10, 10, 10);
 }
 
 footer a {
   text-decoration: none;
-  color: #fff;
+  color: black;
 }
 
 footer a:hover {
@@ -463,10 +464,6 @@ footer a:hover {
 
   /* new topbarnav menu resposiveness start */
   .topnav a:not(:first-child) {display: none;}
-  .topnav a.icon {
-    float: right;
-    display: block;
-  }
 
   .topnav a.icon {
     float: right;
@@ -490,9 +487,6 @@ footer a:hover {
     display: block;
     text-align: left;
   }
-
-
-
   /* new topbarnav menu resposiveness end */
 
 }
@@ -572,6 +566,7 @@ footer a:hover {
 @media only screen and (min-width: 768px) {
   .image-item {
     margin-top: -76px;
+    object-fit: cover;
 
   }
   .numbertext {
