@@ -9,6 +9,43 @@ function myNavFunction() {
   }
 }
 
+// collect datas start//
+
+let charData;
+let myFavorites = [];
+let foundItemsInSearch = [];
+
+const favorites = localStorage.getItem("myFavorites");
+if (favorites) {
+  myFavorites = JSON.parse(favorites);
+}
+const getCharData = async () => {
+  const url = "https://game-of-thrones1.p.rapidapi.com/Characters";
+  const options = {
+    method: "GET",
+    headers: {
+      "X-RapidAPI-Key": "ac7004bf47msh2f4c6c7b1900cc8p1928afjsn3080a2b617ef",
+      "X-RapidAPI-Host": "game-of-thrones1.p.rapidapi.com",
+    },
+  };
+
+  let response = await fetch(url, options);
+  charData = await response.json();
+};
+getCharData();
+
+let quotesData;
+const getQuotesData = async () => {
+  const response = await fetch(
+    "https://ervandogan12.github.io/GotData/quotes.json"
+  );
+  quotesData = await response.json();
+};
+getQuotesData();
+
+//collect datas finish//
+
+
 //slider start//
 
 let slideIndex = 1;
@@ -39,56 +76,6 @@ function showSlides(n) {
   slides[slideIndex - 1].style.display = "block";
 }
 //slider finish//
-
-let charData;
-
-const getCharData = async () => {
-  const url = "https://game-of-thrones1.p.rapidapi.com/Characters";
-  const options = {
-    method: "GET",
-    headers: {
-      "X-RapidAPI-Key": "ac7004bf47msh2f4c6c7b1900cc8p1928afjsn3080a2b617ef",
-      "X-RapidAPI-Host": "game-of-thrones1.p.rapidapi.com",
-    },
-  };
-
-  let response = await fetch(url, options);
-  charData = await response.json();
-};
-getCharData();
-
-let quotesData;
-const getQuotesData = async () => {
-  const response = await fetch(
-    "https://ervandogan12.github.io/GotData/quotes.json"
-  );
-  quotesData = await response.json();
-};
-getQuotesData();
-
-let myFavorites = [];
-let foundItemsInSearch = [];
-
-const favorites = localStorage.getItem("myFavorites");
-if (favorites) {
-  myFavorites = JSON.parse(favorites);
-}
-
-// Selectors//
-const homeBackBtn = document.querySelector("#back-home");
-const characterBtn = document.querySelector("#character");
-const main = document.querySelector("main");
-const collageContainer = document.querySelector("#collage-container");
-const locationBtn = document.querySelector("#location");
-const quotesBtn = document.querySelector("#quotes");
-const imgBtn1 = document.querySelector("#img-1");
-const imgBtn2 = document.querySelector("#img-2");
-const imgBtn3 = document.querySelector("#img-3");
-const favoritesBtn = document.querySelector("#favorites");
-const bar = document.querySelectorAll("span");
-const searchInput = document.getElementById("search-input");
-const fullPageImg = document.getElementById("fullPageImg");
-const scrollToTopBtn = document.querySelector(".scrollToTopBtn");
 
 const renderHomePage = () => {
   collageContainer.className = "collage-container";
@@ -191,7 +178,7 @@ const createQuoteCard = (arrayItem) => {
   const newDivQuote = document.createElement("div");
   newDivQuote.className = "quota-card";
   const newIcon = document.createElement("i");
-  newIcon.className = "far fa-bookmark icon";
+  newIcon.className = "far fa-bookmark icon-fav";
   newIcon.addEventListener("click", addToFavorites);
   newIcon.title = "Add to Favorites";
   Object.keys(myFavorites).forEach((key) => {
@@ -369,7 +356,6 @@ const categoryRenderHandler = (e) => {
 };
 
 const searchHandler = (e) => {
-  console.log("---450---");
   const searchText = e.target.value.toLowerCase();
   foundItemsInSearch = [];
 
@@ -382,6 +368,22 @@ const searchHandler = (e) => {
   categoryRender("searchSection");
 };
 
+
+// Selectors//
+const homeBackBtn = document.querySelector("#back-home");
+const characterBtn = document.querySelector("#character");
+const main = document.querySelector("main");
+const collageContainer = document.querySelector("#collage-container");
+const locationBtn = document.querySelector("#location");
+const quotesBtn = document.querySelector("#quotes");
+const imgBtn1 = document.querySelector("#img-1");
+const imgBtn2 = document.querySelector("#img-2");
+const imgBtn3 = document.querySelector("#img-3");
+const favoritesBtn = document.querySelector("#favorites");
+const bar = document.querySelectorAll("span");
+const searchInput = document.getElementById("search-input");
+const fullPageImg = document.getElementById("fullPageImg");
+const scrollToTopBtn = document.querySelector(".scrollToTopBtn");
 //Listeners//
 homeBackBtn.addEventListener("click", renderHomePage);
 searchInput.addEventListener("input", searchHandler);
