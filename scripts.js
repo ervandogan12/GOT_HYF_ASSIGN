@@ -384,6 +384,7 @@ const bar = document.querySelectorAll("span");
 const searchInput = document.getElementById("search-input");
 const fullPageImg = document.getElementById("fullPageImg");
 const scrollToTopBtn = document.querySelector(".scrollToTopBtn");
+const navBtn = document.querySelector("#hamburger");
 //Listeners//
 homeBackBtn.addEventListener("click", renderHomePage);
 searchInput.addEventListener("input", searchHandler);
@@ -395,4 +396,6 @@ imgBtn3.addEventListener("click", categoryRenderHandler);
 quotesBtn.addEventListener("click", categoryRenderHandler);
 favoritesBtn.addEventListener("click", categoryRenderHandler);
 scrollToTopBtn.addEventListener("click", scrollToTop);
+navBtn.addEventListener("click",myNavFunction);
+
 document.addEventListener("scroll", handleScroll);

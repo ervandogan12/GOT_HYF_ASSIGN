@@ -18,7 +18,7 @@
         <a id="location" data-key="locations">LOCATIONS</a>
         <a id="quotes" data-key="quotes">QUOTES</a>
         <a id="favorites" data-key="favorites">FAVORITE QUOTES</a>
-        <a href="javascript:void(0);" class="icon" onclick="myNavFunction()">
+        <a href="javascript:void(0);" data-key="nav-key" id="hamburger"  class="icon">
           <i class="fa fa-bars"></i>
         </a>
       </div>
@@ -59,8 +59,8 @@
           <img id='img-3' data-key="quotes" title="QUOTAS" class="image-item"
             src="https://wallpapercave.com/wp/wp12084976.jpg" alt="img-3" />
         </div>
-        <a class="prev" onclick="plusSlides(-1)">❮</a>
-        <a class="next" onclick="plusSlides(1)">❯</a>
+        <a class="prev" id="prevBtn" onclick="plusSlides(-1)">❮</a>
+        <a class="next" id="nextBtn" onclick="plusSlides(1)">❯</a>
 
       </div>
 
@@ -72,7 +72,7 @@
     <button class="scrollToTopBtn">👆</button>
   </main>
   <footer>
-    <p>©copyright <span class="name">Dogan-Soft</span> <i class='fab fa-creative-commons-nc'></i>2023</p>
+    <p>©copyright©<span class="name">Dogan-Soft</span> <i class='fab fa-creative-commons-nc'></i>2023</p>
   </footer>
   <script src="scripts.js"></script>
 </body>

@@ -376,7 +376,7 @@ footer p {
 }
 
 footer span {
-  color: rgb(10, 10, 10);
+  color: rgb(189, 67, 67);
 }
 
 footer a {
@@ -530,11 +530,15 @@ footer a {
   }
 }
 
-@media only screen and (max-width: 300px) {
+@media only screen and (max-width: 430px) {
 
   .prev,
   .next {
-    font-size: 11px;
+    font-size: 14px;
+  }
+
+  .image-item {
+    height: 120%;
   }
 }
 
